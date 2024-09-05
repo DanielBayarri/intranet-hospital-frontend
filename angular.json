@@ -52,7 +52,11 @@
 							}
 						],
 						"styles": [
-							"projects/host/src/styles.css"
+							"projects/host/src/styles.css",  
+							"primeng/resources/themes/aura-light-teal/theme.css",
+ 							"primeng/resources/primeng.css",
+ 							 "node_modules/primeicons/primeicons.css"
+
 						],
 						"scripts": []
 					}
@@ -76,7 +80,11 @@
 							}
 						],
 						"styles": [
-							"projects/host/src/styles.css"
+							"projects/host/src/styles.css",
+							"primeng/resources/themes/aura-light-teal/theme.css",
+							"primeng/resources/primeng.css",
+							"node_modules/primeicons/primeicons.css"
+
 						],
 						"scripts": []
 					},
@@ -169,7 +177,11 @@
 							}
 						],
 						"styles": [
-							"projects/regin/src/styles.css"
+							"projects/regin/src/styles.css",
+							"primeng/resources/themes/aura-light-teal/theme.css",
+							"primeng/resources/primeng.css",
+							"node_modules/primeicons/primeicons.css"
+
 						],
 						"scripts": []
 					}
@@ -192,7 +204,11 @@
 							}
 						],
 						"styles": [
-							"projects/regin/src/styles.css"
+							"projects/regin/src/styles.css",							
+							"primeng/resources/themes/aura-light-teal/theme.css",
+							"primeng/resources/primeng.css",
+							"node_modules/primeicons/primeicons.css"
+
 						],
 						"scripts": []
 					},

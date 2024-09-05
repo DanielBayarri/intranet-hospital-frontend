@@ -10,7 +10,24 @@ module.exports = withNativeFederation({
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+     "primeng": {
+      singleton: true,
+      requiredVersion: false,
+    },
+    "primeicons": {
+      singleton: true,
+      requiredVersion: false,
+    },
+    "@angular/cdk": {
+      singleton: true,
+      requiredVersion: false,
+    },
+    "chart.js": {
+      singleton: true,
+      requiredVersion: false,
+    },
   },
+  
 
   skip: [
     'rxjs/ajax',
