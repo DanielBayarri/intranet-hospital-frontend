@@ -1,1 +1,46 @@
-<p>login works!</p>,
+<section class="flex flex-col justify-center items-center h-screen">
+  <form
+    autocomplete="off"
+    [formGroup]="myForm"
+    (ngSubmit)="login()"
+    class="flex flex-col items-center"
+  >
+    <!--Usuario-->
+    <div class="relative w-80 mb-1">
+      <input
+        type="text "
+        formControlName="dni"
+        class="py-3 pe-0 ps-8 block w-full bg-transparent border-t-transparent border-b border-white text-sm focus:border-t-transparent focus:border-x-transparent focus:border-slate-400 focus:ring-0 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
+        placeholder="Usuario"
+      />
+      <div
+        class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-2 peer-disabled:opacity-50 peer-disabled:pointer-events-none"
+      >
+        <i class="pi pi-user text-primary"></i>
+      </div>
+    </div>
+
+    <!--Contraseña-->
+    <div class="relative w-80">
+      <input
+        type="password"
+        formControlName="password"
+        class="peer py-3 pe-0 ps-8 block w-full bg-transparent border-t-transparent border-b border-white text-sm focus:border-t-transparent focus:border-x-transparent focus:border-slate-400 focus:ring-0 focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
+        placeholder="Contraseña"
+      />
+      <div
+        class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-2 peer-disabled:opacity-50 peer-disabled:pointer-events-none"
+      >
+        <i class="pi pi-lock text-primary"></i>
+      </div>
+    </div>
+
+    <button
+      class="px-5 py-1 text-dark rounded my-5 bg-primary cursor-pointer hover:text-white"
+      type="submit"
+      [disabled]="myForm.invalid"
+    >
+      Login
+    </button>
+  </form>
+</section>
