@@ -1,0 +1,76 @@
+<section class="h-full mx-5">
+  <app-breadcrumb />
+
+  <h3 class="font-medium text-center">
+    <i class="pi pi-list text-teal-500 ml-4"></i> Listado de Incidencias
+  </h3>
+
+  <div class="card max-w-7xl mx-auto">
+    <p-table
+      #dt2
+      [value]="incidenciasList"
+      [tableStyle]="{ 'min-width': '70rem' }"
+      [styleClass]="size"
+      [paginator]="true"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [globalFilterFields]="['titulo', 'comentario', 'tipo.nombre']"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <p-iconField iconPosition="right" class="ml-auto">
+            <p-inputIcon>
+              <i class="pi pi-search"></i>
+            </p-inputIcon>
+            <input
+              pInputText
+              type="text"
+              (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Buscar..."
+              class="custom-input"
+            />
+          </p-iconField>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="fecha" style="width: 12%">
+            Fecha <p-sortIcon field="fecha" />
+          </th>
+          <th pSortableColumn="hora" style="width: 12%">
+            Hora <p-sortIcon field="hora" />
+          </th>
+          <th pSortableColumn="titulo" style="width: 20%">
+            Titulo <p-sortIcon field="titulo" />
+          </th>
+          <th pSortableColumn="comentario" style="width: 26%">
+            Comentario <p-sortIcon field="comentario" />
+          </th>
+          <th pSortableColumn="tipo" style="width: 15%">
+            Tipo <p-sortIcon field="tipo" />
+          </th>
+          <th pSortableColumn="subtipo" style="width: 15%">
+            Subtipo <p-sortIcon field="subtipo" />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-incidenciasList>
+        <tr>
+          <td>{{ incidenciasList.fecha }}</td>
+          <td>{{ incidenciasList.horaInicio }}</td>
+          <td>{{ incidenciasList.titulo }}</td>
+          <td>{{ incidenciasList.comentario }}</td>
+          <td>{{ incidenciasList.tipo.nombre }}</td>
+          <td>{{ incidenciasList.subtipo.nombre }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
+
+<!--
+fecha / hora / titulo / comentario/ tipo/ subtipo (normal)
+fecha / hora/ titulo / comentario/ tipo/ subtipo / persona (admin) 
+fecha / hora/ titulo / comentario/tipo/ subtipo / persona / grupo (superadmin) 
+basdge con servicio
+-->

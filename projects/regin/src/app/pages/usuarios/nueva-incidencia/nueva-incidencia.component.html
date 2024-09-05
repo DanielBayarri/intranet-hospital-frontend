@@ -1,0 +1,15 @@
+<section class="h-full mx-5">
+  <app-breadcrumb />
+  <h2>Crear Incidencia</h2>
+  <form action="" class="flex flex-wrap">
+    <label for="fechaHora">Fecha y hora de incio</label>
+    <app-calendar id="fechaHora" />
+
+    <app-input />
+    <app-select
+      [options]="gruposList$"
+      (selectionChange)="onSelectionChange($event)"
+    />
+    <button>Crear Incidencia</button>
+  </form>
+</section>
