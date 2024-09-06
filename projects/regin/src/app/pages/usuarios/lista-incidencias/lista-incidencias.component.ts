@@ -1,14 +1,14 @@
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';
-import { IncidenciaService } from '../../../core/services/incidencia.service';
-import { IncidenciaInterface } from '../../../core/interfaces/incidencia.interface';
 import { Observable } from 'rxjs';
-import { Grupo } from '../../../core/interfaces/grupo.interface';
-import { GrupoService } from '../../../core/services/grupo.service';
 import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { BreadcrumbComponent } from '../../../assets/components/breadcrumb/breadcrumb.component';
+import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interface';
+import { IncidenciaInterface } from '../../../../../../shared/interfaces/incidencia.interface';
+import { IncidenciaService } from '../../../core/services/incidencia.service';
+import { GrupoService } from '../../../core/services/grupo.service';
 
 @Component({
   selector: 'app-lista-incidencias',
@@ -47,12 +47,12 @@ import { InputIconModule } from 'primeng/inputicon';
 })
 export class ListaIncidenciasComponent implements OnInit {
   public incidenciasList: IncidenciaInterface[] = [];
-  public gruposList$!: Observable<Grupo[]>;
+  public gruposList$!: Observable<GrupoInterface[]>;
   size: string = 'p-datatable-sm';
 
   constructor(
     private incidenciaService: IncidenciaService,
-    private grupoService: GrupoService,
+    private grupoService: GrupoService
   ) {}
 
   ngOnInit(): void {

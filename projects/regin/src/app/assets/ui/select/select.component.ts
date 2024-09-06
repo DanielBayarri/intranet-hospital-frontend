@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Grupo } from '../../../core/interfaces/grupo.interface';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interface';
 
 @Component({
   selector: 'app-select',
@@ -33,7 +33,7 @@ import { AsyncPipe } from '@angular/common';
   `,
 })
 export class SelectComponent {
-  @Input() options!: Observable<Grupo[]>;
+  @Input() options!: Observable<GrupoInterface[]>;
   @Output() selectionChange: EventEmitter<string> = new EventEmitter<string>();
 
   selectedOption: string = '';

@@ -41,6 +41,6 @@ export class BreadcrumbComponent {
       return { label: this.capitalize(segment), routerLink: url };
     });
 
-    this.home = { icon: 'pi pi-home', routerLink: '/regin/incidencias/nueva' };
+    this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
 }

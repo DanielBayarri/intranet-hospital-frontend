@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { SelectComponent } from '../../../assets/ui/select/select.component';
-import { InputComponent } from '../../../assets/ui/input/input.component';
-import { CalendarComponent } from '../../../assets/components/calendar/calendar.component';
-import { BreadcrumbComponent } from '../../../assets/components/breadcrumb/breadcrumb.component';
 import { GrupoService } from '../../../core/services/grupo.service';
+import { BreadcrumbComponent } from '../../../assets/components/breadcrumb/breadcrumb.component';
+import { CalendarComponent } from '../../../assets/components/calendar/calendar.component';
+import { InputComponent } from '../../../assets/ui/input/input.component';
 import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interface';
+import { SelectComponent } from '../../../assets/ui/select/select.component';
+
 @Component({
   selector: 'app-nueva-incidencia',
   standalone: true,

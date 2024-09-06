@@ -12,6 +12,8 @@ export const routes: Routes = [
     path: 'regin',
     loadComponent: () =>
       loadRemoteModule('regin', './Component').then((m) => m.AppComponent),
+    loadChildren: () =>
+      import('../../../regin/src/app/app.routes').then((m) => m.REGIN_ROUTES),
   },
   {
     canActivate: [isNotAuthenticatedGuard],
@@ -24,7 +26,8 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: '**',
+    path: '',
     redirectTo: '/home',
+    pathMatch: 'full',
   },
 ];

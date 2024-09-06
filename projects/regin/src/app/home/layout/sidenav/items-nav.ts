@@ -3,12 +3,12 @@ export const itemsNav = [
     title: 'Registro Incidencias',
     links: [
       {
-        href: 'regin/incidencias/nueva',
+        href: 'incidencias/nueva',
         title: 'Nueva incidencia',
         icon: 'pi-pen-to-square',
       },
       {
-        href: 'regin/incidencias/lista',
+        href: 'incidencias/lista',
         title: 'Listado incidencias',
         icon: 'pi-list',
       },
@@ -18,17 +18,17 @@ export const itemsNav = [
     title: 'Administrador',
     links: [
       {
-        href: 'regin/administrador/usuarios',
+        href: 'administrador/usuarios',
         title: 'Usuarios',
         icon: 'pi-user',
       },
       {
-        href: 'regin/administrador/tipos-subtipos',
+        href: 'administrador/tipos-subtipos',
         title: 'Tipos y subtipos',
         icon: 'pi-sitemap',
       },
       {
-        href: 'regin/administrador/incidencias',
+        href: 'administrador/incidencias',
         title: 'Incidencias',
         icon: 'pi-file-edit',
       },
@@ -38,17 +38,17 @@ export const itemsNav = [
     title: 'Super Administrador',
     links: [
       {
-        href: 'regin/super/usuarios',
+        href: 'super/usuarios',
         title: 'Usuarios',
         icon: 'pi-user',
       },
       {
-        href: 'regin/super/tipos-subtipos',
+        href: 'super/tipos-subtipos',
         title: 'Tipos y subtipos',
         icon: 'pi-sitemap',
       },
       {
-        href: 'regin/super/incidencias',
+        href: 'super/incidencias',
         title: 'Incidencias',
         icon: 'pi-file-edit',
       },

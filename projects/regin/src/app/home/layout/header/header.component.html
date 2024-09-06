@@ -9,18 +9,15 @@
   </div>
 
   <div class="flex items-center gap-2">
-    Bienvenido:
-    @if (user) {
-      <span class="text-primary">{{ user.nombre }} {{ user.apellidos }} </span>
-      <i
-        (click)="onLogout()"
-        class="pi pi-sign-out mr-5 p-2 rounded-lg border border-gray-600 hover:bg-teal-300 hover:text-white cursor-pointer"
-      ></i>
-    }
-    @if (!user) {
-      <span>Cargando... </span>
+    @if (user()) { Bienvenido:
+    <span class="text-primary"
+      >{{ user()?.nombre }} {{ user()?.apellidos }}
+    </span>
+    <i
+      (click)="onLogout()"
+      class="pi pi-sign-out mr-5 p-2 rounded-lg border border-gray-600 hover:bg-teal-500 hover:text-white cursor-pointer"
+      routerLink="/"
+    ></i>
     }
   </div>
-
-  <p>Nombre: {{ nombre() }}</p>
 </header>

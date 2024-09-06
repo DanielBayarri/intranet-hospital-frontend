@@ -2,37 +2,29 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   inject,
-  input,
   OnInit,
 } from '@angular/core';
-import { AuthService } from '../../core/services/auth/auth.service';
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { UsuarioInterface } from '../../core/interfaces/usuario.interface';
+import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [JsonPipe, AsyncPipe],
+  imports: [JsonPipe, AsyncPipe, RouterLink],
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
-  public user: UsuarioInterface | null;
+  private router = inject(Router);
+  public user = computed(() => this.authService.currentUser());
 
-  nombre = input<string>();
-
-  constructor() {
-    this.user = this.authService.currentUser();
-    effect(() => {
-      this.user = this.authService.currentUser();
-      console.log(this.user);
-    });
+  ngOnInit() {
+    this.authService.checkAuthStatus().subscribe();
   }
 
-  ngOnInit(): void {}
   onLogout() {
     this.authService.logout();
   }
