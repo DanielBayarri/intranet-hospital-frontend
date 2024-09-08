@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common'
+import { Component, Input } from '@angular/core'
+import { ReactiveFormsModule } from '@angular/forms'
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './input.component.html',
   styles: `
     .custom-input {
@@ -27,8 +28,9 @@ import { Component, Input } from '@angular/core';
     .custom-input:focus {
       border-color: #38b2ac;
     }
-  `,
+  `
 })
 export class InputComponent {
-  @Input() type: string = 'text';
+  @Input() type: string = 'text'
+  @Input() formName?: string
 }

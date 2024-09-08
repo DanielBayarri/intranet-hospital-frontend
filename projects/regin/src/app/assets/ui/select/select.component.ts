@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interface';
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { Observable } from 'rxjs'
+import { AsyncPipe } from '@angular/common'
+import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interface'
 
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [FormsModule, AsyncPipe],
+  imports: [ReactiveFormsModule, AsyncPipe],
   templateUrl: './select.component.html',
   styles: `
     .custom-select {
@@ -30,15 +30,17 @@ import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interf
     .custom-select:focus {
       border-color: #38b2ac;
     }
-  `,
+  `
 })
 export class SelectComponent {
-  @Input() options!: Observable<GrupoInterface[]>;
-  @Output() selectionChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() options!: Observable<GrupoInterface[]>
+  @Input() formName: string = ''
 
-  selectedOption: string = '';
+  @Output() selectionChange: EventEmitter<string> = new EventEmitter<string>()
 
-  onOptionSelected(): void {
-    this.selectionChange.emit(this.selectedOption);
+  selectedOption: string = ''
+
+  onOptionSelected (): void {
+    this.selectionChange.emit(this.selectedOption)
   }
 }

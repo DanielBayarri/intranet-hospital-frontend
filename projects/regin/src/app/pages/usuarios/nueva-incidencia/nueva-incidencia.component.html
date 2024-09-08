@@ -1,15 +1,122 @@
+<!-- <form action="" class="flex flex-wrap">
+  <label for="fechaHora">Fecha y hora de incio</label>
+  <app-calendar id="fechaHora" />
+  
+  <app-input />
+ 
+  <button>Crear Incidencia</button> 
+</form>
+-->
+
 <section class="h-full mx-5">
   <app-breadcrumb />
   <h2>Crear Incidencia</h2>
-  <form action="" class="flex flex-wrap">
-    <label for="fechaHora">Fecha y hora de incio</label>
-    <app-calendar id="fechaHora" />
+  <p-panel header="Crear Incidencia">
+    <form [formGroup]="myForm" (ngSubmit)="login()">
+      <!-- Titulo -->
+      <div class="p-field p-grid">
+        <label for="titulo" class="p-col-fixed" style="width: 100px"
+          >Titulo</label
+        >
+        <div class="p-col">
+          <input
+            id="titulo"
+            type="text"
+            pInputText
+            formControlName="titulo"
+            class="p-inputtext-sm"
+            placeholder="Ingrese el título"
+          />
+          <div
+            *ngIf="
+              myForm.get('titulo')?.invalid && myForm.get('titulo')?.touched
+            "
+          >
+            <small class="p-error">El título es requerido</small>
+          </div>
+        </div>
+      </div>
 
-    <app-input />
-    <app-select
-      [options]="gruposList$"
-      (selectionChange)="onSelectionChange($event)"
-    />
-    <button>Crear Incidencia</button>
-  </form>
+      <!-- Tipo -->
+      <div class="p-field p-grid">
+        <label for="tipo" class="p-col-fixed" style="width: 100px">Tipo</label>
+        <div class="p-col">
+          <p-dropdown
+            id="tipo"
+            [options]="tiposList"
+            formControlName="tipo"
+            optionLabel="nombre"
+            placeholder="Seleccione un tipo"
+          ></p-dropdown>
+          <div
+            *ngIf="myForm.get('tipo')?.invalid && myForm.get('tipo')?.touched"
+          >
+            <small class="p-error">El tipo es requerido</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtipo -->
+      <div class="p-field p-grid">
+        <label for="subtipo" class="p-col-fixed" style="width: 100px"
+          >Subtipo</label
+        >
+        <div class="p-col">
+          <p-dropdown
+            id="subtipo"
+            [options]="subtiposList"
+            formControlName="subtipo"
+            optionLabel="nombre"
+            placeholder="Seleccione un subtipo"
+            (onChange)="onSelectionChange($event)"
+            [disabled]="subtipoDisabled"
+          ></p-dropdown>
+          <div
+            *ngIf="
+              myForm.get('subtipo')?.invalid && myForm.get('subtipo')?.touched
+            "
+          >
+            <small class="p-error">El subtipo es requerido</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comentario -->
+      <div class="p-field p-grid">
+        <label for="comentario" class="p-col-fixed" style="width: 100px"
+          >Comentario</label
+        >
+        <div class="p-col">
+          <textarea
+            id="comentario"
+            pInputTextarea
+            formControlName="comentario"
+            rows="5"
+            placeholder="Escribe tu comentario"
+            class="p-inputtext-sm"
+          ></textarea>
+          <div
+            *ngIf="
+              myForm.get('comentario')?.invalid &&
+              myForm.get('comentario')?.touched
+            "
+          >
+            <small class="p-error">El comentario es requerido</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de enviar -->
+      <div class="p-field p-grid">
+        <div class="p-col">
+          <button
+            pButton
+            label="Crear Incidencia"
+            type="submit"
+            [disabled]="myForm.invalid"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </p-panel>
 </section>

@@ -1,19 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
-import { AuthService } from '../../../auth/auth.service';
+import { CommonModule } from '@angular/common'
+import { Component, computed, inject, OnInit } from '@angular/core'
+import { AuthService } from '../../../auth/auth.service'
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './header.component.html',
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
-  private authService = inject(AuthService);
+  constructor (private authService: AuthService) {}
 
-  public user = computed(() => this.authService.currentUser());
+  public user = computed(() => this.authService.currentUser())
 
-  ngOnInit() {
-    this.authService.checkAuthStatus().subscribe();
+  ngOnInit () {
+    this.authService.checkAuthStatus().subscribe()
   }
 }
