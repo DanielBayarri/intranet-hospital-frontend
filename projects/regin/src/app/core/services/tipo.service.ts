@@ -1,19 +1,22 @@
-import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { TipoInterface } from '../../../../../shared/interfaces/tipo.interface'
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TipoInterface } from '../../../../../shared/interfaces/tipo.interface';
+import { environment } from '../../../../../shared/environments/environments';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TipoService {
-  constructor (private http: HttpClient) {}
+  private readonly baseUrl: string = environment.baseUrl;
 
-  getTipos (): Observable<TipoInterface[]> {
-    return this.http.get<TipoInterface[]>('http://localhost:3000/api/tipos')
+  constructor(private http: HttpClient) {}
+
+  getTipos(): Observable<TipoInterface[]> {
+    return this.http.get<TipoInterface[]>(`${this.baseUrl}/api/tipos`);
   }
 
-  getTipo (id: number): Observable<TipoInterface> {
-    return this.http.get<TipoInterface>(`http://localhost:3000/api/tipos/${id}`)
+  getTipo(id: number): Observable<TipoInterface> {
+    return this.http.get<TipoInterface>(`${this.baseUrl}/api/tipos/${id}`);
   }
 }

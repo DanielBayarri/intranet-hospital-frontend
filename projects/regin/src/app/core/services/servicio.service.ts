@@ -1,23 +1,24 @@
-import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { ServicioInterface } from '../../../../../shared/interfaces/servicio.interface'
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ServicioInterface } from '../../../../../shared/interfaces/servicio.interface';
+import { environment } from '../../../../../shared/environments/environments';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ServicioService {
-  constructor (private http: HttpClient) {}
+  private readonly baseUrl: string = environment.baseUrl;
 
-  getServiciosList (): Observable<ServicioInterface[]> {
-    return this.http.get<ServicioInterface[]>(
-      'http://localhost:3000/api/servicios'
-    )
+  constructor(private http: HttpClient) {}
+
+  getServiciosList(): Observable<ServicioInterface[]> {
+    return this.http.get<ServicioInterface[]>(`${this.baseUrl}/api/servicios`);
   }
 
-  getServicioList (id: number): Observable<ServicioInterface> {
+  getServicioList(id: number): Observable<ServicioInterface> {
     return this.http.get<ServicioInterface>(
-      `http://localhost:3000/api/servicios/${id}`
-    )
+      `${this.baseUrl}/api/servicios/${id}`
+    );
   }
 }

@@ -9,6 +9,8 @@ import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interf
 import { IncidenciaInterface } from '../../../../../../shared/interfaces/incidencia.interface';
 import { IncidenciaService } from '../../../core/services/incidencia.service';
 import { GrupoService } from '../../../core/services/grupo.service';
+import { UsuarioInterface } from '../../../../../../shared/interfaces/usuario.interface';
+import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
 
 @Component({
   selector: 'app-lista-incidencias',
@@ -47,28 +49,34 @@ import { GrupoService } from '../../../core/services/grupo.service';
 })
 export class ListaIncidenciasComponent implements OnInit {
   public incidenciasList: IncidenciaInterface[] = [];
-  public gruposList$!: Observable<GrupoInterface[]>;
-  size: string = 'p-datatable-sm';
+  public currentUser: UsuarioInterface | null = null;
+
+  size: string = 'p-datatable-sm p-datatable-striped';
 
   constructor(
     private incidenciaService: IncidenciaService,
-    private grupoService: GrupoService
-  ) {}
+    private authService: AuthService
+  ) {
+    this.currentUser = this.authService.currentUser();
+  }
 
   ngOnInit(): void {
-    this.gruposList$ = this.grupoService.getGrupoList();
     this.getIncidencias();
   }
 
   getIncidencias() {
-    this.incidenciaService.getIncidenciaList().subscribe({
-      next: (result) => {
-        this.incidenciasList = result;
-        console.log(this.incidenciasList);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    if (this.currentUser) {
+      const userId = this.currentUser.id;
+      this.incidenciaService.getIncidenciasList().subscribe({
+        next: (result) => {
+          this.incidenciasList = result.filter(
+            (incidencia) => incidencia.usuario.id === userId
+          );
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
   }
 }

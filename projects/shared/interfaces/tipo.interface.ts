@@ -1,7 +1,7 @@
-import { ServicioInterface } from './servicio.interface'
+import { SubtipoInterface } from './subtipo.interface';
 
 export interface TipoInterface {
-  id: number
-  nombre: string
-  servicio?: ServicioInterface
+  id: number;
+  nombre: string;
+  subtipos: SubtipoInterface[];
 }
