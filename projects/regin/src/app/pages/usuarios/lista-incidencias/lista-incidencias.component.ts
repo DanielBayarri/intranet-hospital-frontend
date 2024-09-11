@@ -11,6 +11,7 @@ import { IncidenciaService } from '../../../core/services/incidencia.service';
 import { GrupoService } from '../../../core/services/grupo.service';
 import { UsuarioInterface } from '../../../../../../shared/interfaces/usuario.interface';
 import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
+import { CalendarComponent } from '../../../assets/components/calendar/calendar.component';
 
 @Component({
   selector: 'app-lista-incidencias',
@@ -22,6 +23,7 @@ import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
     TableModule,
     IconFieldModule,
     InputIconModule,
+    CalendarComponent,
   ],
   templateUrl: './lista-incidencias.component.html',
   styles: `
@@ -50,6 +52,7 @@ import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
 export class ListaIncidenciasComponent implements OnInit {
   public incidenciasList: IncidenciaInterface[] = [];
   public currentUser: UsuarioInterface | null = null;
+  public fecha: Date | undefined;
 
   size: string = 'p-datatable-sm p-datatable-striped';
 

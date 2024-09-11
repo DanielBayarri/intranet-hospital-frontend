@@ -1,14 +1,20 @@
 # Frontend
 
 ## Intranet (Host)
+
+- [] Maquetar Login
+- [] Validación front login
+- [] Maquetar landingpage
+- 
  
 ## RegIn
     
 - [] Componentes reutilizables Select, button e input en /ui
-- [] encabezados paginas css.
+- [x] encabezados paginas css.
+- [] Guardias localizadas
 
 ### Layout
-- [] Logos, imagenes en shared.
+- [x] Logos, imagenes en shared.
 - [] Header, usuario y avatar, API: <https://ui-avatars.com>
 - [] Sidebar, mostrar segun rol
 
@@ -17,15 +23,10 @@
 **Usuario**
 
 - Nueva Incidencia 
-    - [] Maquetar formulario ->
-    - [] Validar formulario con errores
-    - [] Toast Incidencia/guardia creada - Error
+    - [x] Maquetar formulario ->
+    - [x] Validar formulario con errores
+    - [x] Toast Incidencia/guardia creada - Error
 
-- Listado de incidencias
-    - [] Input filtro fecha
-    - [] Input filtro titulo/comentario
-    - [] Select tipo
-    - [] Select subtipo
 
 **Admin**
 
@@ -47,11 +48,12 @@
 - Incidencias
     - Mostrar por fecha, usuario, turno, tipo, subtipo y servicio
     - PDF
-    -  
+    
 
 # Backend
 
 - [] Refactorizar carpetas
 - [] Swagger
 - [] Ldap GET
-- [] Rutas api para microfront (user lo q necesita)
+- [] Rutas api para microfront (user lo q necesita)?
+- [] Guard back para todas las peticiones
