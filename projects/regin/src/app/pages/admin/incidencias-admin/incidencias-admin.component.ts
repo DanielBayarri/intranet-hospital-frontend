@@ -56,11 +56,11 @@ export class IncidenciasAdminComponent {
 
   getIncidencias() {
     if (this.currentUser) {
-      const servicioId = this.currentUser.servicio.id;
+      const grupoId = this.currentUser.grupo.id;
       this.incidenciaService.getIncidenciasList().subscribe({
         next: (result) => {
           this.incidenciasList = result.filter(
-            (incidencia) => incidencia.servicio.id === servicioId
+            (incidencia) => incidencia.grupo.id === grupoId
           );
         },
         error: (err) => {

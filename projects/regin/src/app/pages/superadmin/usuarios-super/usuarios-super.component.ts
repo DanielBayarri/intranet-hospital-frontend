@@ -64,8 +64,8 @@ export class UsuariosSuperComponent {
     });
   }
 
-  getSeverity(idServicio: number) {
-    switch (idServicio) {
+  getSeverity(idGrupo: number) {
+    switch (idGrupo) {
       case 1:
         return 'info';
       case 2:

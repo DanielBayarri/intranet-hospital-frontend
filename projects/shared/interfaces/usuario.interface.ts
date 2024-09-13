@@ -8,8 +8,8 @@ export interface UsuarioInterface {
   apellidos: string;
   dni: string;
   email: string;
-  servicio: ServicioInterface;
-  grupo: GrupoInterface[];
+  servicio: ServicioInterface[];
+  grupo: GrupoInterface;
   incidencias: IncidenciaInterface[];
 }
 

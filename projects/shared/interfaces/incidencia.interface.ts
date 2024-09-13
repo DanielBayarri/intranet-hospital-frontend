@@ -1,3 +1,4 @@
+import { GrupoInterface } from './grupo.interface';
 import { ServicioInterface } from './servicio.interface';
 import { SubtipoInterface } from './subtipo.interface';
 import { TipoInterface } from './tipo.interface';
@@ -11,7 +12,7 @@ export interface IncidenciaInterface {
   horaInicio: string;
   comentario: string;
   usuario: UsuarioInterface;
-  servicio: ServicioInterface;
+  grupo: GrupoInterface;
   tipo: TipoInterface;
   subtipo: SubtipoInterface;
   turno: TurnoInterface;
@@ -24,7 +25,7 @@ export interface CrearIncidenciaInterface {
   horaInicio: string;
   comentario: string;
   usuarioId: number;
-  servicioId: number;
+  grupoId: number;
   tipoId: number;
   subtipoId: number;
   turnoId: number;

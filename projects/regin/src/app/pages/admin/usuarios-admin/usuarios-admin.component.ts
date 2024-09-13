@@ -62,12 +62,12 @@ export class UsuariosAdminComponent implements OnInit {
 
   getUsuarios() {
     if (this.currentUser) {
-      const servicioId = this.currentUser.servicio.id;
+      const grupoId = this.currentUser.grupo.id;
       this.usuarioService.getUsuariosList().subscribe({
         next: (result) => {
-          console.log(result[0].servicio.id);
+          console.log(result[0].grupo.id);
           this.usuariosList = result.filter(
-            (usuario) => usuario.servicio.id === servicioId
+            (usuario) => usuario.grupo.id === grupoId
           );
         },
         error: (err) => {
@@ -77,8 +77,8 @@ export class UsuariosAdminComponent implements OnInit {
     }
   }
 
-  getSeverity(idServicio: number) {
-    switch (idServicio) {
+  getSeverity(idgrupo: number) {
+    switch (idgrupo) {
       case 1:
         return 'info';
       case 2:

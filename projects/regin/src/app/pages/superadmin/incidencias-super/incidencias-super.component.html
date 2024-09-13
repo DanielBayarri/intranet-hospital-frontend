@@ -50,8 +50,8 @@
           <th pSortableColumn="usuario" style="width: 10%">
             Usuario <p-sortIcon field="usuario" />
           </th>
-          <th pSortableColumn="servicio" style="width: 10%">
-            Servicio <p-sortIcon field="servicio" />
+          <th pSortableColumn="grupo" style="width: 10%">
+            Grupo <p-sortIcon field="grupo" />
           </th>
           <th pSortableColumn="titulo" style="width: 20%">
             Titulo <p-sortIcon field="titulo" />
@@ -74,8 +74,8 @@
           <td>{{ incidenciasList.usuario.nombre }}</td>
           <td>
             <p-tag
-              [value]="incidenciasList.servicio.nombre"
-              [severity]="getSeverity(incidenciasList.servicio.id)"
+              [value]="incidenciasList.grupo.nombre"
+              [severity]="getSeverity(incidenciasList.grupo.id)"
             />
           </td>
           <td>{{ incidenciasList.titulo }}</td>

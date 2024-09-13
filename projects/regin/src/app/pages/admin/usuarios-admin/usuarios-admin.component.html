@@ -54,8 +54,8 @@
           <th pSortableColumn="email" style="width: 26%">
             Email <p-sortIcon field="email" />
           </th>
-          <th pSortableColumn="servicio" style="width: 15%">
-            Servicio <p-sortIcon field="servicio" />
+          <th pSortableColumn="grupo" style="width: 15%">
+            Grupo <p-sortIcon field="grupo" />
           </th>
         </tr>
       </ng-template>
@@ -67,8 +67,8 @@
           <td>{{ usuariosList.email }}</td>
           <td>
             <p-tag
-              [value]="usuariosList.servicio.nombre"
-              [severity]="getSeverity(usuariosList.servicio.id)"
+              [value]="usuariosList.grupo.nombre"
+              [severity]="getSeverity(usuariosList.grupo.id)"
             />
           </td>
         </tr>

@@ -15,4 +15,8 @@ export class GrupoService {
   getGrupoList(): Observable<GrupoInterface[]> {
     return this.http.get<GrupoInterface[]>(`${this.baseUrl}/api/grupos`);
   }
+
+  getGrupo(id: number): Observable<GrupoInterface> {
+    return this.http.get<GrupoInterface>(`${this.baseUrl}/api/grupos/${id}`);
+  }
 }
