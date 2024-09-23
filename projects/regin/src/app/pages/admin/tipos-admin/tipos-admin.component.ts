@@ -1,12 +1,330 @@
-import { CommonModule } from "@angular/common";
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ListboxModule } from 'primeng/listbox';
+import { TipoService } from '../../../core/services/tipo.service';
+import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
+import { SubtipoService } from '../../../core/services/subtipo.service';
+import { UsuarioInterface } from '../../../../../../shared/interfaces/usuario.interface';
+import {
+  CreateTipoInterface,
+  TipoInterface,
+} from '../../../../../../shared/interfaces/tipo.interface';
+import { GrupoService } from '../../../core/services/grupo.service';
+import { BreadcrumbComponent } from '../../../assets/components/breadcrumb/breadcrumb.component';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { forkJoin } from 'rxjs';
+import { PanelModule } from 'primeng/panel';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { SubtipoInterface } from '../../../../../../shared/interfaces/subtipo.interface';
 
 @Component({
-    selector: 'app-tipos-admin',
-    standalone: true,
-    imports: [
-        CommonModule,
-    ],
-    templateUrl: './tipos-admin.component.html',
+  selector: 'app-tipos-admin',
+  standalone: true,
+  imports: [
+    BreadcrumbComponent,
+    TableModule,
+    TooltipModule,
+    ButtonModule,
+    PanelModule,
+    InputTextModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    ToastModule,
+    ConfirmPopupModule,
+  ],
+  providers: [ConfirmationService, MessageService],
+  templateUrl: './tipos-admin.component.html',
 })
-export class TiposAdminComponent { }
+export class TiposAdminComponent implements OnInit {
+  public currentUser: UsuarioInterface | null = null;
+  public tiposList: TipoInterface[] = [];
+  public subtiposList: any[] = [];
+  public isLoading: boolean = true;
+
+  public tipoForm: FormGroup;
+  public oldEditTipo: TipoInterface | null = null;
+  public isEditingTipo: boolean = false;
+
+  public oldEditSubtipo: SubtipoInterface | null = null;
+  public subtipoForm: FormGroup;
+  public isEditingSubtipo: boolean = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private tipoService: TipoService,
+    private authService: AuthService,
+    private grupoService: GrupoService
+  ) {
+    this.tipoForm = this.fb.group({
+      tipo: ['', [Validators.required, Validators.minLength(1)]],
+    });
+
+    this.subtipoForm = this.fb.group({
+      tiposub: ['', [Validators.required, Validators.minLength(1)]],
+      subtipo: ['', Validators.required],
+    });
+    this.currentUser = this.authService.currentUser();
+  }
+
+  ngOnInit(): void {
+    this.initTiposList();
+  }
+
+  // Inicializar la lista de tipos y subtipos
+  initTiposList() {
+    if (this.currentUser) {
+      const grupoId = this.currentUser.grupo.id;
+
+      this.grupoService.getGrupo(grupoId).subscribe((grupo) => {
+        this.tiposList = grupo.tipos;
+
+        // Cargar los subtipos para cada tipo usando forkJoin
+        const subtipoObservables = this.tiposList.map((tipo: TipoInterface) =>
+          this.tipoService.getTipo(tipo.id)
+        );
+
+        // Esperamos que todos los observables de los tipos se resuelvan
+        forkJoin(subtipoObservables).subscribe((tipoDetailsArray) => {
+          tipoDetailsArray.forEach((tipoDetails, index) => {
+            tipoDetails.subtipos.forEach((subtipo) => {
+              // Añadir los subtipos a la lista con el nombre del tipo al que pertenecen
+              this.subtiposList.push({
+                ...subtipo,
+                tipoNombre: this.tiposList[index].nombre,
+              });
+            });
+          });
+          // Desactivar el flag del loader una vez que los subtipos estén cargados
+          this.isLoading = false;
+        });
+      });
+    }
+  }
+
+  // Funciones tipo
+  editingTipo(tipo: TipoInterface) {
+    this.isEditingTipo = true;
+    this.oldEditTipo = tipo;
+  }
+
+  cancelEditTipo() {
+    this.isEditingTipo = false;
+    this.oldEditTipo = null;
+  }
+
+  postTipo() {
+    if (this.currentUser) {
+      const tipo: CreateTipoInterface = {
+        nombre: this.tipoForm.value.tipo,
+        grupoId: this.currentUser.grupo.id,
+      };
+      this.tipoService.createTipo(tipo).subscribe({
+        next: (response) => {
+          this.initTiposList();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Tipo',
+            detail: 'Tipo creado correctamente',
+          });
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Tipo',
+            detail: 'Error al crear el tipo',
+          });
+        },
+      });
+    }
+  }
+  patchTipo(oldEditTipo: TipoInterface | null) {
+    if (this.currentUser && oldEditTipo) {
+      const tipo: CreateTipoInterface = {
+        nombre: this.tipoForm.value.tipo,
+        grupoId: this.currentUser.grupo.id,
+      };
+      this.tipoService.patchTipo(tipo, oldEditTipo.id).subscribe({
+        next: (response) => {
+          this.initTiposList();
+          this.cancelEditTipo();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Tipo',
+            detail: 'Tipo editado correctamente',
+          });
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Tipo',
+            detail: 'Error al crear el tipo',
+          });
+        },
+      });
+    }
+  }
+
+  deleteTipo(event: Event, tipo: TipoInterface) {
+    let nombreTipo = tipo.nombre;
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: `Seguro que quieres eliminar el tipo: ${nombreTipo}`,
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: 'p-button-danger p-button-sm',
+      accept: () => {
+        this.tipoService.getTipo(tipo.id).subscribe({
+          next: (response: TipoInterface) => {
+            if (response.subtipos.length === 0) {
+              this.tipoService.deleteTipo(tipo.id).subscribe({
+                next: (response) => {
+                  this.initTiposList();
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Tipo',
+                    detail: `Tipo "${nombreTipo}" eliminado`,
+                  });
+                },
+                error: (error) => {
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Tipo',
+                    detail: 'Error al eliminar el tipo',
+                  });
+                },
+              });
+            } else {
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Tipo',
+                detail: `No puedes eliminar "${tipo.nombre}", tiene subtipos asociados`,
+              });
+            }
+          },
+        });
+      },
+    });
+  }
+
+  // Funciones Subtipo
+  editSubtipo(id: number) {
+    console.log('Editar subtipo con ID:', id);
+  }
+
+  editingSubtipo(subtipo: SubtipoInterface) {
+    this.isEditingSubtipo = true;
+    this.oldEditSubtipo = subtipo;
+  }
+
+  cancelEditSubtipo() {
+    this.isEditingSubtipo = false;
+    this.oldEditSubtipo = null;
+  }
+
+  postSubipo() {
+    if (this.currentUser) {
+      const tipo: CreateTipoInterface = {
+        nombre: this.tipoForm.value.tipo,
+        grupoId: this.currentUser.grupo.id,
+      };
+      this.tipoService.createTipo(tipo).subscribe({
+        next: (response) => {
+          this.initTiposList();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Tipo',
+            detail: 'Tipo creado correctamente',
+          });
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Tipo',
+            detail: 'Error al crear el tipo',
+          });
+        },
+      });
+    }
+  }
+  patchSubtipo(oldEditTipo: TipoInterface | null) {
+    if (this.currentUser && oldEditTipo) {
+      const tipo: CreateTipoInterface = {
+        nombre: this.tipoForm.value.tipo,
+        grupoId: this.currentUser.grupo.id,
+      };
+      this.tipoService.patchTipo(tipo, oldEditTipo.id).subscribe({
+        next: (response) => {
+          this.initTiposList();
+          this.cancelEditTipo();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Tipo',
+            detail: 'Tipo editado correctamente',
+          });
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Tipo',
+            detail: 'Error al crear el tipo',
+          });
+        },
+      });
+    }
+  }
+
+  deleteSubtipo(event: Event, tipo: TipoInterface) {
+    let nombreTipo = tipo.nombre;
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: `Seguro que quieres eliminar el tipo: ${nombreTipo}`,
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: 'p-button-danger p-button-sm',
+      accept: () => {
+        this.tipoService.getTipo(tipo.id).subscribe({
+          next: (response: TipoInterface) => {
+            if (response.subtipos.length === 0) {
+              this.tipoService.deleteTipo(tipo.id).subscribe({
+                next: (response) => {
+                  this.initTiposList();
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Tipo',
+                    detail: `Tipo "${nombreTipo}" eliminado`,
+                  });
+                },
+                error: (error) => {
+                  this.messageService.add({
+                    severity: 'error',
+                    summary: 'Tipo',
+                    detail: 'Error al eliminar el tipo',
+                  });
+                },
+              });
+            } else {
+              this.messageService.add({
+                severity: 'info',
+                summary: 'Tipo',
+                detail: `No puedes eliminar "${tipo.nombre}", tiene subtipos asociados`,
+              });
+            }
+          },
+        });
+      },
+    });
+  }
+}

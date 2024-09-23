@@ -2,5 +2,5 @@
   inputId="calendar"
   [(ngModel)]="date"
   [showIcon]="true"
-  [showTime]="false"
+  (onSelect)="onDateSelect($event)"
 />

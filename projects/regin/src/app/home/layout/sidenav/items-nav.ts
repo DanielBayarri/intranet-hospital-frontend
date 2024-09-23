@@ -9,7 +9,7 @@ export const itemsNav = [
       },
       {
         href: 'incidencias/lista',
-        title: 'Listado incidencias',
+        title: 'Mis incidencias',
         icon: 'pi-list',
       },
     ],
@@ -29,7 +29,7 @@ export const itemsNav = [
       },
       {
         href: 'administrador/incidencias',
-        title: 'Incidencias',
+        title: 'Listado incidencias',
         icon: 'pi-file-edit',
       },
     ],
@@ -49,7 +49,7 @@ export const itemsNav = [
       },
       {
         href: 'super/incidencias',
-        title: 'Incidencias',
+        title: 'Listado incidencias',
         icon: 'pi-file-edit',
       },
     ],

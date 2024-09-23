@@ -8,11 +8,19 @@ import { BreadcrumbComponent } from '../../../assets/components/breadcrumb/bread
 import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { CalendarComponent } from '../../../assets/components/calendar/calendar.component';
 
 @Component({
   selector: 'app-incidencias-admin',
   standalone: true,
-  imports: [BreadcrumbComponent, TableModule, IconFieldModule, InputIconModule],
+  imports: [
+    BreadcrumbComponent,
+    TableModule,
+    IconFieldModule,
+    InputIconModule,
+    CommonModule,
+    CalendarComponent,
+  ],
   templateUrl: './incidencias-admin.component.html',
   styles: `
     .custom-input {
@@ -40,6 +48,8 @@ import { InputIconModule } from 'primeng/inputicon';
 export class IncidenciasAdminComponent {
   public incidenciasList: IncidenciaInterface[] = [];
   public currentUser: UsuarioInterface | null = null;
+  public fecha: Date | undefined;
+  public comentariosExpandidos: Set<number> = new Set<number>(); // Para los comentarios largos
 
   size: string = 'p-datatable-sm p-datatable-striped';
 
@@ -54,19 +64,52 @@ export class IncidenciasAdminComponent {
     this.getIncidencias();
   }
 
-  getIncidencias() {
+  getIncidencias(fecha?: boolean) {
     if (this.currentUser) {
       const grupoId = this.currentUser.grupo.id;
       this.incidenciaService.getIncidenciasList().subscribe({
         next: (result) => {
-          this.incidenciasList = result.filter(
-            (incidencia) => incidencia.grupo.id === grupoId
-          );
+          if (fecha) {
+            this.incidenciasList = result.filter(
+              (incidencia) =>
+                incidencia.grupo.id === grupoId &&
+                this.fecha?.toLocaleDateString('en-CA') ===
+                  incidencia.fecha.toString()
+            );
+          } else {
+            this.incidenciasList = result.filter(
+              (incidencia) => incidencia.grupo.id === grupoId
+            );
+          }
         },
         error: (err) => {
           console.log(err);
         },
       });
     }
+  }
+
+  onDateChanged(date: Date) {
+    this.getIncidencias(true);
+    this.fecha = date;
+    console.log('Fecha seleccionada:', this.fecha.toLocaleDateString('en-CA'));
+  }
+  clearDate() {
+    this.getIncidencias();
+    this.fecha = undefined;
+  }
+
+  // Este método controla la expansión o contracción del comentario
+  mostrarComentarioCompleto(id: number) {
+    if (this.comentariosExpandidos.has(id)) {
+      this.comentariosExpandidos.delete(id); // Si está expandido, lo contrae
+    } else {
+      this.comentariosExpandidos.add(id); // Si está contraído, lo expande
+    }
+  }
+
+  // Este método comprueba si el comentario está expandido
+  isComentarioExpandido(id: number): boolean {
+    return this.comentariosExpandidos.has(id);
   }
 }

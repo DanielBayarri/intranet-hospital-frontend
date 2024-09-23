@@ -79,13 +79,10 @@
             placeholder="Ingrese el título"
             class="w-full mx-auto"
           />
-          <div
-            *ngIf="
-              myForm.get('titulo')?.invalid && myForm.get('titulo')?.touched
-            "
-          >
-            <small class="p-error">El título es requerido</small>
-          </div>
+          @if ( myForm.get('titulo')?.invalid && myForm.get('titulo')?.touched)
+          {
+          <small class="p-error">El título es requerido</small>
+          }
         </div>
 
         <!-- Comentario -->

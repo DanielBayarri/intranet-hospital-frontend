@@ -52,7 +52,6 @@ import { GrupoService } from '../../../core/services/grupo.service';
 })
 export class NuevaIncidenciaComponent implements OnInit {
   public myForm: FormGroup;
-  // public gruposList$: Observable<GrupoInterface[]>
   public turnosList: TurnoInterface[] = [];
   public tiposList: TipoInterface[] = [];
   public subtiposList: SubtipoInterface[] = [];
@@ -106,8 +105,8 @@ export class NuevaIncidenciaComponent implements OnInit {
     console.log(horaInicioIncidencia);
     this.turnosList.map((turno) => {
       if (
-        turno.horaInicio >= horaInicioIncidencia &&
-        turno.horaFin <= horaInicioIncidencia
+        turno.horaInicio <= horaInicioIncidencia &&
+        turno.horaFin >= horaInicioIncidencia
       ) {
         turnoId = turno.id;
         console.log(turnoId + turno.nombre);
@@ -117,15 +116,17 @@ export class NuevaIncidenciaComponent implements OnInit {
     return turnoId;
   }
 
+  formatFechaHoy() {
+    return this.fechaHoy.toLocaleDateString('en-US');
+  }
+
   onSubmit(): void {
     if (this.myForm.valid && this.currentUser) {
       let horaInicio = this.datePipe.transform(
         this.myForm.value.horaInicio,
-        'hh:mm:ss',
+        'HH:mm:ss',
         'UTC+2'
       );
-      //this.validateHoraTurno(horaInicio);
-      console.log(horaInicio);
 
       let incidencia: CrearIncidenciaInterface = {
         titulo: this.myForm.value.titulo,

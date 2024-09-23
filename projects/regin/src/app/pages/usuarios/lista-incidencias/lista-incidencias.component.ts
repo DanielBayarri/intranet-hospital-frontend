@@ -12,6 +12,7 @@ import { GrupoService } from '../../../core/services/grupo.service';
 import { UsuarioInterface } from '../../../../../../shared/interfaces/usuario.interface';
 import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
 import { CalendarComponent } from '../../../assets/components/calendar/calendar.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-lista-incidencias',
@@ -53,6 +54,7 @@ export class ListaIncidenciasComponent implements OnInit {
   public incidenciasList: IncidenciaInterface[] = [];
   public currentUser: UsuarioInterface | null = null;
   public fecha: Date | undefined;
+  public comentariosExpandidos: Set<number> = new Set<number>(); // Para los comentarios largos
 
   size: string = 'p-datatable-sm p-datatable-striped';
 
@@ -67,19 +69,52 @@ export class ListaIncidenciasComponent implements OnInit {
     this.getIncidencias();
   }
 
-  getIncidencias() {
+  getIncidencias(fecha?: boolean) {
     if (this.currentUser) {
       const userId = this.currentUser.id;
       this.incidenciaService.getIncidenciasList().subscribe({
         next: (result) => {
-          this.incidenciasList = result.filter(
-            (incidencia) => incidencia.usuario.id === userId
-          );
+          if (fecha) {
+            this.incidenciasList = result.filter(
+              (incidencia) =>
+                incidencia.usuario.id === userId &&
+                this.fecha?.toLocaleDateString('en-CA') ===
+                  incidencia.fecha.toString()
+            );
+          } else {
+            this.incidenciasList = result.filter(
+              (incidencia) => incidencia.usuario.id === userId
+            );
+          }
         },
         error: (err) => {
           console.log(err);
         },
       });
     }
+  }
+
+  onDateChanged(date: Date) {
+    this.getIncidencias(true);
+    this.fecha = date;
+    console.log('Fecha seleccionada:', this.fecha.toLocaleDateString('en-CA'));
+  }
+  clearDate() {
+    this.getIncidencias();
+    this.fecha = undefined;
+  }
+
+  // Este método controla la expansión o contracción del comentario
+  mostrarComentarioCompleto(id: number) {
+    if (this.comentariosExpandidos.has(id)) {
+      this.comentariosExpandidos.delete(id); // Si está expandido, lo contrae
+    } else {
+      this.comentariosExpandidos.add(id); // Si está contraído, lo expande
+    }
+  }
+
+  // Este método comprueba si el comentario está expandido
+  isComentarioExpandido(id: number): boolean {
+    return this.comentariosExpandidos.has(id);
   }
 }

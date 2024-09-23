@@ -12,8 +12,7 @@ import { InputOtpModule } from 'primeng/inputotp';
   styles: ``,
 })
 export class CalendarComponent {
-  @Output() date: Date | undefined;
-  @Input() label: string = '';
+  @Input() date: Date | undefined;
   @Output() dateChange: EventEmitter<Date> = new EventEmitter<Date>();
 
   constructor(private primengConfig: PrimeNGConfig) {}
@@ -22,7 +21,6 @@ export class CalendarComponent {
     this.primengConfig.setTranslation({
       accept: 'Accept',
       reject: 'Cancel',
-      //translations
       firstDayOfWeek: 1,
       dayNames: [
         'Domingo',
