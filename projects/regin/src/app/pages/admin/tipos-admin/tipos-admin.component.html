@@ -65,13 +65,13 @@
           <td>
             <i
               pTooltip="Editar"
-              tooltipPosition="top"
+              tooltipPosition="left"
               class="pi pi-pencil text-cyan-600 mx-2 cursor-pointer"
               (click)="editingSubtipo(subtipo)"
             ></i>
             <i
               pTooltip="Eliminar"
-              tooltipPosition="top"
+              tooltipPosition="left"
               class="pi pi-trash text-red-600 mx-2 cursor-pointer"
               (click)="deleteSubtipo($event, subtipo)"
             ></i>
@@ -131,7 +131,12 @@
     </p-panel>
     <!-- Subtipos -->
     <p-panel styleClass="w-full min-w-[400px]">
-      <form [formGroup]="subtipoForm">
+      <form
+        [formGroup]="subtipoForm"
+        (ngSubmit)="
+          !isEditingSubtipo ? postSubipo() : patchSubtipo(oldEditSubtipo)
+        "
+      >
         <div class="col-span-4 flex flex-col w-full mx-auto mb-3">
           <label for="subtipo" class="block mb-2" style="width: 100px">{{
             isEditingSubtipo
@@ -148,8 +153,8 @@
             value="{{ oldEditSubtipo?.nombre }}"
           />
         </div>
-        @if (tipoForm.get('subtipo')?.invalid &&
-        tipoForm.get('subtipo')?.touched) {
+        @if (subtipoForm.get('subtipo')?.invalid &&
+        subtipoForm.get('subtipo')?.touched) {
         <small class="p-error">El nombre del subtipo es requerido</small>
         }
 
@@ -160,16 +165,16 @@
           <p-dropdown
             id="tiposub"
             [options]="tiposList"
-            formControlName="tipoa"
+            formControlName="tiposList"
             optionLabel="nombre"
             placeholder="Seleccione un tipo"
           ></p-dropdown>
-          @if (tipoForm.get('tiposub')?.invalid &&
-          tipoForm.get('tiposub')?.touched) {
+          @if (subtipoForm.get('tiposList')?.invalid &&
+          subtipoForm.get('tiposList')?.touched) {
           <small class="p-error">El nombre del tipo es requerido</small>
           }
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 mt-3">
           <p-button
             label="Guardar"
             [outlined]="true"
