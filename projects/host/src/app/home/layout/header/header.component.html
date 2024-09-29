@@ -1,56 +1,19 @@
-<div class="w-screen bg-[#12284b] h-[45vh] absolute"></div>
-<header class="w-screen h-[45vh] flex flex-col items-center relative">
-  <span class="w-[90rem] my-10 text-[2.2rem] font-bold text-white">
-    Bienvenido, Daniel!</span
-  >
+<div class="my-10 w-[50rem] text-textColor">
+  <h2 class="tracking-widest text-xs font-extrabold">
+    HOSPITAL PROVINCIAL DE CASTELLÓN
+  </h2>
 
-  <section
-    class="max-w-[90rem] w-full flex top-24 bg-white shadow-sm"
-    style="border-start-end-radius: 3.5rem"
-  >
-    <div class="w-1/3 px-12 py-16 tracking-wide h-full">
-      <h1 class="text-3xl font-bold">
-        Hospital Provincial
-        <br />
-        Intranet
-      </h1>
-      <h2 class="font-normal text-xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-        laboriosam ipsum! Fugit laboriosam placeat eos
-      </h2>
-      <div class="py-5">
-        <a
-          href=""
-          class="px-10 hover:shadow-md py-2 mt-3 bg-[#12284b] rounded-2xl text-white no-underline"
-          >Ver más</a
-        >
-      </div>
-    </div>
+  <h1 class="text-[#2cb7ab] font-bold text-[2rem] tracking-tight my-4">
+    Intranet, aqui un texto que quede bien
+  </h1>
+  <p class="my-4">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet accusamus
+    repudiandae ipsum harum nostrum voluptatibus earum facere deleniti enim
+    ipsa, quia iste commodi beatae,
+  </p>
 
-    <div class="card">
-      <p-galleria
-        [value]="images"
-        [numVisible]="5"
-        [circular]="true"
-        [showItemNavigators]="true"
-        [showThumbnails]="false"
-        [responsiveOptions]="responsiveOptions"
-        [containerStyle]="{ 'max-width': '520px' }"
-      >
-        <ng-template pTemplate="item" let-item>
-          <img [src]="item.itemImageSrc" style="width: 100%; display: block" />
-        </ng-template>
-      </p-galleria>
-    </div>
-
-    <div class="w-1/3">
-      <h1>Intranet Hospital Provincial</h1>
-      <h2>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-        laboriosam ipsum! Fugit laboriosam placeat eos a consequuntur odio
-      </h2>
-    </div>
-  </section>
-</header>
-
-<style></style>
+  <button class="rounded-full py-2 px-8 bg-azul text-white mt-4">
+    Ver Recurso
+  </button>
+</div>
+<div class="mr-16 border-b-2 border-b-gray-100 my-6"></div>

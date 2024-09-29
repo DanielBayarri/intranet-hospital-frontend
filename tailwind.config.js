@@ -7,7 +7,12 @@ module.exports = {
     '!./node_modules', // Excluye node_modules
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'textColor': '#616161',
+        'azul': '#00a1d1'
+      }
+    },
   },
   plugins: [],
 }

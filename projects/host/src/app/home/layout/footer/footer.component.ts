@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-linksnav',
+  selector: 'app-footer',
   standalone: true,
   imports: [
     CommonModule,
   ],
-  templateUrl: './linksnav.component.html',
+  templateUrl: './footer.component.html',
 })
-export class LinksnavComponent { }
+export class FooterComponent { }

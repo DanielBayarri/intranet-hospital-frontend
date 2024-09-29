@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-card',
   standalone: true,
   imports: [
     CommonModule,
   ],
-  templateUrl: './header.component.html',
+  templateUrl: './card.component.html',
 })
-export class HeaderComponent { }
+export class CardComponent { }
