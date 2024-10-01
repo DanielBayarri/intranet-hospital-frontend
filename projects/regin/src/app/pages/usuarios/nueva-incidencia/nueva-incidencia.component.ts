@@ -28,6 +28,8 @@ import { IncidenciaService } from '../../../core/services/incidencia.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { GrupoService } from '../../../core/services/grupo.service';
+import { GuardiaLocalizadaInterface } from '../../../../../../shared/interfaces/guardia.interface';
+import { GuardiaLocalizadaService } from '../../../core/services/guardias.service';
 
 @Component({
   selector: 'app-nueva-incidencia',
@@ -52,6 +54,7 @@ import { GrupoService } from '../../../core/services/grupo.service';
 })
 export class NuevaIncidenciaComponent implements OnInit {
   public myForm: FormGroup;
+  public guardiasForm: FormGroup;
   public turnosList: TurnoInterface[] = [];
   public tiposList: TipoInterface[] = [];
   public subtiposList: SubtipoInterface[] = [];
@@ -66,7 +69,8 @@ export class NuevaIncidenciaComponent implements OnInit {
     private grupoService: GrupoService,
     private tipoService: TipoService,
     private authService: AuthService,
-    private turnoService: TurnoService
+    private turnoService: TurnoService,
+    private guardiaService: GuardiaLocalizadaService
   ) {
     this.myForm = this.fb.group({
       titulo: ['', [Validators.required]],
@@ -74,6 +78,12 @@ export class NuevaIncidenciaComponent implements OnInit {
       subtipo: [''],
       comentario: ['', [Validators.required]],
       horaInicio: ['', [Validators.required]],
+    });
+
+    this.guardiasForm = this.fb.group({
+      comentario: ['', [Validators.required]],
+      horaInicio: ['', [Validators.required]],
+      horaFin: ['', [Validators.required]],
     });
     this.currentUser = this.authService.currentUser();
   }
@@ -158,6 +168,49 @@ export class NuevaIncidenciaComponent implements OnInit {
             severity: 'error',
             summary: 'Incidencia',
             detail: 'Error al crear la incidencia',
+          });
+        },
+      });
+    }
+  }
+
+  onSubmitGuardia(): void {
+    if (this.guardiasForm.valid && this.currentUser) {
+      const horaInicio = this.datePipe.transform(
+        this.guardiasForm.value.horaInicio,
+        'HH:mm:ss',
+        'UTC+2'
+      );
+      const horaFin = this.datePipe.transform(
+        this.guardiasForm.value.horaFin,
+        'HH:mm:ss',
+        'UTC+2'
+      );
+
+      const guardia = {
+        fecha: this.fechaHoy,
+        horaInicio: horaInicio
+          ? horaInicio
+          : this.guardiasForm.value.turno.horaInicio,
+        horaFin: horaFin ? horaFin : this.guardiasForm.value.turno.horaFin,
+        comentario: this.guardiasForm.value.comentario,
+        usuarioId: this.currentUser.id,
+      };
+
+      this.guardiaService.createGuardia(guardia).subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Guardia Localizada',
+            detail: 'Guardia Localizada creada correctamente',
+          });
+          this.guardiasForm.reset();
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Guardia Localizada',
+            detail: 'Error al crear la guardia localizada',
           });
         },
       });

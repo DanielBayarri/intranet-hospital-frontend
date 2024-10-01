@@ -119,7 +119,86 @@
     </p-panel>
   </div>
   <h3 class="font-medium text-center">
-    <i class="pi pi-car text-teal-500 ml-4 px-2 my-5"></i> Nueva Guardia
+    <i class="pi pi-map-marker text-teal-500 ml-4 px-2 my-5"></i> Nueva Guardia
     Localizada
   </h3>
+  <div class="max-w-6xl mx-auto">
+    <p-panel>
+      <form
+        [formGroup]="guardiasForm"
+        (ngSubmit)="onSubmitGuardia()"
+        class="grid grid-cols-3 gap-5 w-[90%] mx-auto"
+      >
+        <!-- Fecha Hoy -->
+        <div class="">
+          <p-fieldset legend="Fecha de hoy">
+            <p class="m-0 pl-2">
+              {{ fechaHoy | date : " dd-MM-yyyy" }}
+            </p>
+          </p-fieldset>
+        </div>
+
+        <!-- Hora inicio -->
+        <div class="flex flex-col justify-center">
+          <label for="calendar-timeonly" class="block mb-2">
+            Hora Inicio
+          </label>
+          <p-calendar
+            inputId="calendar-timeonly"
+            formControlName="horaInicio"
+            [timeOnly]="true"
+          />
+          @if (guardiasForm.get('horaInicio')?.invalid &&
+          guardiasForm.get('horaInicio')?.touched) {
+          <small class="p-error">La hora de inicio es requerida</small>
+          }
+        </div>
+
+        <!-- Hora Fin -->
+        <div class="flex flex-col justify-center">
+          <label for="calendar-timeonly" class="block mb-2"> Hora fin </label>
+          <p-calendar
+            inputId="calendar-timeonly"
+            formControlName="horaFin"
+            [timeOnly]="true"
+          />
+          @if (guardiasForm.get('horaFin')?.invalid &&
+          guardiasForm.get('horaFin')?.touched) {
+          <small class="p-error">La hora de inicio es requerida</small>
+          }
+        </div>
+
+        <!-- Comentario -->
+        <div class="col-span-4 flex flex-col w-full mx-auto">
+          <label for="comentario" class="block mb-2" style="width: 100px"
+            >Comentario</label
+          >
+          <textarea
+            style="width: 100%"
+            id="comentario"
+            pInputTextarea
+            formControlName="comentario"
+            rows="5"
+            placeholder="Escribe tu comentario"
+            class="p-inputtext-sm"
+          ></textarea>
+          @if ( guardiasForm.get('comentario')?.invalid &&
+          guardiasForm.get('comentario')?.touched) {
+          <small class="p-error">El comentario es requerido</small> }
+        </div>
+
+        <!-- Botón de enviar -->
+        <div class="col-span-3">
+          <div class="mx-auto">
+            <button
+              pButton
+              label="Crear Guardia Localizada"
+              type="submit"
+              [disabled]="guardiasForm.invalid"
+            ></button>
+          </div>
+        </div>
+      </form>
+    </p-panel>
+  </div>
 </section>

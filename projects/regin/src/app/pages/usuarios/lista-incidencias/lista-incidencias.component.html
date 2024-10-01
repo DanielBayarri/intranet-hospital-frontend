@@ -6,6 +6,13 @@
   </h3>
 
   <div class="card max-w-7xl mx-auto">
+    <p-button
+      label="Generar PDF"
+      (click)="generarPDF()"
+      icon="pi pi-file-pdf"
+      size="small"
+      styleClass="ml-2"
+    />
     <p-table
       #dt2
       [value]="incidenciasList"

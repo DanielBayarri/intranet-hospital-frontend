@@ -1,18 +1,18 @@
-import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TableModule } from 'primeng/table';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Table, TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { BreadcrumbComponent } from '../../../assets/components/breadcrumb/breadcrumb.component';
-import { GrupoInterface } from '../../../../../../shared/interfaces/grupo.interface';
 import { IncidenciaInterface } from '../../../../../../shared/interfaces/incidencia.interface';
 import { IncidenciaService } from '../../../core/services/incidencia.service';
-import { GrupoService } from '../../../core/services/grupo.service';
 import { UsuarioInterface } from '../../../../../../shared/interfaces/usuario.interface';
 import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
 import { CalendarComponent } from '../../../assets/components/calendar/calendar.component';
+import { PdfService } from '../../../core/pdf/pdf.service';
 import { ButtonModule } from 'primeng/button';
+
+// Necesario para que pdfMake funcione correctamente
 
 @Component({
   selector: 'app-lista-incidencias',
@@ -25,6 +25,7 @@ import { ButtonModule } from 'primeng/button';
     IconFieldModule,
     InputIconModule,
     CalendarComponent,
+    ButtonModule,
   ],
   templateUrl: './lista-incidencias.component.html',
   styles: `
@@ -57,10 +58,12 @@ export class ListaIncidenciasComponent implements OnInit {
   public comentariosExpandidos: Set<number> = new Set<number>(); // Para los comentarios largos
 
   size: string = 'p-datatable-sm p-datatable-striped';
+  @ViewChild('dt2') dt2!: Table;
 
   constructor(
     private incidenciaService: IncidenciaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private pdfService: PdfService
   ) {
     this.currentUser = this.authService.currentUser();
   }
@@ -116,5 +119,13 @@ export class ListaIncidenciasComponent implements OnInit {
   // Este método comprueba si el comentario está expandido
   isComentarioExpandido(id: number): boolean {
     return this.comentariosExpandidos.has(id);
+  }
+
+  generarPDF() {
+    const filteredRows = this.dt2.filteredValue || this.incidenciasList;
+
+    console.log('Resultados filtrados:', filteredRows);
+
+    this.pdfService.generatePDF(filteredRows);
   }
 }

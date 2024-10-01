@@ -139,6 +139,8 @@ export class TiposAdminComponent implements OnInit {
       };
       this.tipoService.createTipo(tipo).subscribe({
         next: (response) => {
+          this.isLoading = true;
+          this.subtiposList = [];
           this.initValuesTable();
           this.messageService.add({
             severity: 'success',
@@ -196,6 +198,8 @@ export class TiposAdminComponent implements OnInit {
             if (response.subtipos.length === 0) {
               this.tipoService.deleteTipo(tipo.id).subscribe({
                 next: (response) => {
+                  this.isLoading = true;
+                  this.subtiposList = [];
                   this.initValuesTable();
                   this.messageService.add({
                     severity: 'success',

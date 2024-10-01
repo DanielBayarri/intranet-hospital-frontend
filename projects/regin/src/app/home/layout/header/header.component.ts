@@ -3,29 +3,29 @@ import {
   Component,
   computed,
   inject,
-  OnInit
-} from '@angular/core'
-import { AsyncPipe, JsonPipe } from '@angular/common'
-import { AuthService } from '../../../../../../host/src/app/auth/auth.service'
-import { Router, RouterLink } from '@angular/router'
+  OnInit,
+} from '@angular/core';
+import { AuthService } from '../../../../../../host/src/app/auth/auth.service';
+import { RouterLink } from '@angular/router';
+import { TagModule } from 'primeng/tag';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [JsonPipe, AsyncPipe, RouterLink],
+  imports: [RouterLink, TagModule, ChipModule],
   templateUrl: './header.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-  private authService = inject(AuthService)
-  private router = inject(Router)
-  public user = computed(() => this.authService.currentUser())
+  private authService = inject(AuthService);
+  public user = computed(() => this.authService.currentUser());
 
-  ngOnInit () {
-    this.authService.checkAuthStatus().subscribe()
+  ngOnInit() {
+    this.authService.checkAuthStatus().subscribe();
   }
 
-  onLogout () {
-    this.authService.logout()
+  onLogout() {
+    this.authService.logout();
   }
 }

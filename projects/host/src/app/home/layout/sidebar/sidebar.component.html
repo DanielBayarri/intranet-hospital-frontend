@@ -1,0 +1,78 @@
+<aside
+  class="flex flex-col h-full bg-[#f6f6f6] mt-10 mb-6 mx-3 rounded-xl p-8 text-textColor font-bold"
+>
+  <h2 class="text-2xl">Hola, {{ user()?.nombre }}</h2>
+  <app-primary-bar />
+
+  <div class="flex flex-col gap-4 mt-8">
+    <app-sidemenu-link
+      [isLink]="true"
+      [name]="'Página Web Hospital Provincial'"
+      [icon]="'building-columns'"
+      [url]="'https://www.hospitalprovincial.es/es/'"
+    />
+    <app-sidemenu-link
+      [isLink]="false"
+      [name]="'RegIn Registro de Incidencias'"
+      [icon]="'file-edit'"
+      routerLink="../regin"
+    />
+    <app-sidemenu-link
+      [isLink]="true"
+      [url]="'https://chpcs.sedelectronica.es/info.0'"
+      [name]="'Sede Electrónica'"
+      [icon]="'book'"
+    />
+  </div>
+
+  <div class="w-full h-[2px] bg-[#eaeced] my-10"></div>
+
+  <div class="">
+    <h3 class="text-lg">Aplicaciones por Navegador</h3>
+    <ul
+      class="list-disc list-outside text-azul mt-6 text-[0.95rem] no-underline"
+    >
+      <li class="my-1">
+        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
+          >Portal Empleado</a
+        >
+      </li>
+      <li class="my-1">
+        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
+          >Bolsa Hospital</a
+        >
+      </li>
+      <li class="my-1">
+        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
+          >Otra Web</a
+        >
+      </li>
+      <li class="my-1">
+        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
+          >Pacs La Plana</a
+        >
+      </li>
+    </ul>
+    <div class="w-full text-end cursor-pointer">
+      <span class="text-sm text-azul">Ver todas</span>
+    </div>
+  </div>
+
+  <div class="w-full h-[2px] bg-[#eaeced] my-10"></div>
+
+  <div class="">
+    <h3 class="text-lg">Aplicaciones Favoritas</h3>
+    <div class="grid grid-cols-2 gap-2 my-6">
+      <app-favourite-app [name]="'Gestlab'" />
+      <app-favourite-app [name]="'iGestlab'" />
+      <app-favourite-app [name]="'Orion Clinic'" />
+      <app-favourite-app [name]="'Abucasis'" />
+      <app-favourite-app [name]="'Pacs La plana'" />
+      <app-favourite-app [name]="'Pacs General'" />
+    </div>
+
+    <div class="w-full text-end cursor-pointer">
+      <span class="text-sm text-azul">Ver todas</span>
+    </div>
+  </div>
+</aside>

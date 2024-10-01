@@ -1,7 +1,0 @@
-<select class="custom-select" formControlName="{{ formName }}">
-  @for (option of options | async; track $index) {
-  <option [value]="option.id">
-    {{ option.nombre }}
-  </option>
-  }
-</select>

@@ -7,7 +7,15 @@ module.exports = {
     '!./node_modules', // Excluye node_modules
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+      'fondo': "url('/fondo1.jpg')",
+    },
+    colors:{
+      'textColor': '#616161',
+      'azul': '#00a1d1'
+    }
+  },
   },
   plugins: [],
 }

@@ -8,10 +8,4 @@ import { AuthService } from '../../../auth/auth.service';
   imports: [RouterModule],
   templateUrl: './navbar.component.html',
 })
-export class NavbarComponent {
-  private authService = inject(AuthService);
-
-  onLogout() {
-    this.authService.logout();
-  }
-}
+export class NavbarComponent {}
