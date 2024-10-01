@@ -7,6 +7,7 @@ import { MenuComponent } from './layout/menu/menu.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { UserNavbarComponent } from './layout/user-navbar/user-navbar.component';
 import { DocumentsComponent } from './layout/documents/documents.component';
+import { HeaderComponent } from './layout/header/header.component';
 
 @Component({
   selector: 'app-home',
