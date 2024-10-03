@@ -1,6 +1,6 @@
 <p-calendar
-  inputId="calendar"
-  [(ngModel)]="date"
-  [showIcon]="true"
-  (onSelect)="onDateSelect($event)"
+  [(ngModel)]="rangeDates"
+  selectionMode="range"
+  [readonlyInput]="true"
+  (onSelect)="onDateSelect()"
 />

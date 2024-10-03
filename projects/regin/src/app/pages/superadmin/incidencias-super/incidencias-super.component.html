@@ -6,6 +6,13 @@
   </h3>
 
   <div class="card max-w-7xl mx-auto">
+    <p-button
+      label="Generar PDF"
+      (click)="generarPDF()"
+      icon="pi pi-file-pdf"
+      size="small"
+      styleClass="ml-2"
+    />
     <p-table
       #dt2
       [value]="incidenciasList"
@@ -13,29 +20,50 @@
       [styleClass]="size"
       styleClass="p-datatable-striped"
       [paginator]="true"
-      [rows]="5"
+      [rows]="10"
       [rowsPerPageOptions]="[5, 10, 20]"
-      [globalFilterFields]="['titulo', 'comentario', 'tipo.nombre']"
+      [globalFilterFields]="['comentario', 'usuario.nombre', 'grupo.nombre']"
     >
       <ng-template pTemplate="caption">
-        <div class="flex flex-col items-end mb-5">
-          <label
-            for="subtipo"
-            class="text-sm font-normal my-1 text-[#4a5568] px-2 mb-1"
-            >Busqueda por titulo, comentario o tipo</label
-          >
-          <p-iconField iconPosition="right" class="ml-auto">
-            <p-inputIcon>
-              <i class="pi pi-search"></i>
-            </p-inputIcon>
-            <input
-              pInputText
-              type="text"
-              (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
-              placeholder="Buscar..."
-              class="custom-input"
+        <div class="flex justify-between">
+          <!-- FIltro Calendario -->
+          <div class="flex flex-col mb-5">
+            <label class="text-sm font-normal my-1 text-[#4a5568] mb-1"
+              >Filtrar por fecha: Inicio - Fin</label
+            >
+            <app-calendar
+              [(rangeDates)]="fecha"
+              (rangeDatesChange)="onDateChanged($event)"
             />
-          </p-iconField>
+            <span
+              class="mt-2 text-teal-500 cursor-pointer text-xs px-2"
+              (click)="clearDate()"
+            >
+              Limpiar filtro de fecha
+            </span>
+          </div>
+          <!-- FIltro lo demas -->
+          <div class="flex flex-col items-end mb-5">
+            <label
+              for="subtipo"
+              class="text-sm font-normal my-1 text-[#4a5568] px-2 mb-1"
+              >Busqueda por comentario, grupo o usuario</label
+            >
+            <p-iconField iconPosition="right" class="ml-auto">
+              <p-inputIcon>
+                <i class="pi pi-search"></i>
+              </p-inputIcon>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt2.filterGlobal($any($event.target).value, 'contains')
+                "
+                placeholder="Buscar..."
+                class="custom-input"
+              />
+            </p-iconField>
+          </div>
         </div>
       </ng-template>
 
@@ -69,7 +97,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-incidenciasList>
         <tr>
-          <td>{{ incidenciasList.fecha }}</td>
+          <td>{{ incidenciasList.fecha | date : "dd/MM/yyyy" }}</td>
           <td>{{ incidenciasList.horaInicio }}</td>
           <td>{{ incidenciasList.usuario.nombre }}</td>
           <td>
@@ -79,7 +107,40 @@
             />
           </td>
           <td>{{ incidenciasList.titulo }}</td>
+          @if(incidenciasList.comentario.length >= 30 ){
+
+          <td>
+            <ng-container
+              *ngIf="
+                isComentarioExpandido(incidenciasList.id);
+                else comentarioCorto
+              "
+            >
+              {{ incidenciasList.comentario }}
+              <br />
+              <span
+                class="cursor-pointer text-teal-500 text-sm"
+                (click)="mostrarComentarioCompleto(incidenciasList.id)"
+              >
+                Ver menos
+              </span>
+            </ng-container>
+            <ng-template #comentarioCorto>
+              {{ incidenciasList.comentario.slice(0, 30) }}...
+              <br />
+              <span
+                class="cursor-pointer text-teal-500 text-sm"
+                (click)="mostrarComentarioCompleto(incidenciasList.id)"
+              >
+                Ver comentario completo
+              </span>
+            </ng-template>
+          </td>
+
+          }@else {
           <td>{{ incidenciasList.comentario }}</td>
+
+          }
           <td>{{ incidenciasList.tipo.nombre }}</td>
           <td>{{ incidenciasList.subtipo.nombre }}</td>
         </tr>

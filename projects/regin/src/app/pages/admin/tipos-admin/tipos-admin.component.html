@@ -93,8 +93,10 @@
         (ngSubmit)="!isEditingTipo ? postTipo() : patchTipo(oldEditTipo)"
       >
         <div class="col-span-4 flex flex-col w-full mx-auto mb-3">
-          <label for="tipo" class="block mb-2" style="width: 100px">{{
-            isEditingTipo ? "Editando tipo: " + oldEditTipo?.nombre : "Tipo"
+          <label for="tipo" class="mb-2" style="width: 300px">{{
+            isEditingTipo
+              ? "Editando tipo: " + oldEditTipo?.nombre
+              : "Crear Tipo"
           }}</label>
           <input
             id="tipo"
@@ -138,7 +140,7 @@
         "
       >
         <div class="col-span-4 flex flex-col w-full mx-auto mb-3">
-          <label for="subtipo" class="block mb-2" style="width: 100px">{{
+          <label for="subtipo" class="flex mb-2" style="width: 300px">{{
             isEditingSubtipo
               ? "Editando subtipo: " + oldEditSubtipo?.nombre
               : "Subtipo"
@@ -159,9 +161,9 @@
         }
 
         <div class="flex flex-col justify-center">
-          <label for="tiposub" class="block mb-2" style="width: 100px"
-            >Tipo</label
-          >
+          <label for="tiposub" class="block mb-2" style="width: 300px">{{
+            isEditingSubtipo ? "Tipo anterior: " + oldEditSubtipo?.tipo : "Tipo"
+          }}</label>
           <p-dropdown
             id="tiposub"
             [options]="tiposList"

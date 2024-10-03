@@ -1,30 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { IncidenciaInterface } from '../../../../../../shared/interfaces/incidencia.interface';
-import { IncidenciaService } from '../../../core/services/incidencia.service';
 import { BreadcrumbComponent } from '../../../assets/components/breadcrumb/breadcrumb.component';
 import { Table, TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { TagModule } from 'primeng/tag';
-import { ButtonModule } from 'primeng/button';
 import { CalendarComponent } from '../../../assets/components/calendar/calendar.component';
+import { ButtonModule } from 'primeng/button';
+import { GuardiaLocalizadaService } from '../../../core/services/guardias.service';
+import { GuardiaLocalizadaInterface } from '../../../../../../shared/interfaces/guardia.interface';
 import { PdfService } from '../../../core/pdf/pdf.service';
+import { TagModule } from 'primeng/tag';
 
 @Component({
-  selector: 'app-incidencias-super',
+  selector: 'app-guardias-super',
   standalone: true,
   imports: [
     BreadcrumbComponent,
+    CommonModule,
     TableModule,
     IconFieldModule,
     InputIconModule,
-    TagModule,
-    CommonModule,
     CalendarComponent,
     ButtonModule,
+    TagModule,
   ],
-  templateUrl: './incidencias-super.component.html',
+  templateUrl: './guardias-super.component.html',
   styles: `
   .custom-input {
     height: 2.5rem;
@@ -48,25 +48,25 @@ import { PdfService } from '../../../core/pdf/pdf.service';
   }
 `,
 })
-export class IncidenciasSuperComponent {
-  public incidenciasList: IncidenciaInterface[] = [];
+export class GuardiasSuperComponent {
+  public guardiasList: GuardiaLocalizadaInterface[] = [];
   public fecha: Date[] = [];
   public comentariosExpandidos: Set<number> = new Set<number>();
-  @ViewChild('dt2') dt2!: Table;
 
   size: string = 'p-datatable-sm p-datatable-striped';
+  @ViewChild('dt2') dt2!: Table;
 
   constructor(
-    private incidenciaService: IncidenciaService,
+    private guardiaService: GuardiaLocalizadaService,
     private pdfService: PdfService
   ) {}
 
   ngOnInit(): void {
-    this.getIncidencias();
+    this.getGuardias();
   }
 
-  getIncidencias(fechaRango?: boolean) {
-    this.incidenciaService.getIncidenciasList().subscribe({
+  getGuardias(fechaRango?: boolean) {
+    this.guardiaService.getGuardiasList().subscribe({
       next: (result) => {
         if (fechaRango && this.fecha.length === 2) {
           const [startDate, endDate] = this.fecha;
@@ -75,12 +75,12 @@ export class IncidenciasSuperComponent {
           const endOfDay = new Date(endDate);
           endOfDay.setHours(23, 59, 59, 999);
 
-          this.incidenciasList = result.filter((incidencia) => {
-            const incidenciaDate = new Date(incidencia.fecha);
+          this.guardiasList = result.filter((guardia) => {
+            const incidenciaDate = new Date(guardia.fecha);
             return incidenciaDate >= startDate && incidenciaDate <= endOfDay;
           });
         } else {
-          this.incidenciasList = result;
+          this.guardiasList = result;
         }
       },
       error: (err) => {
@@ -91,7 +91,7 @@ export class IncidenciasSuperComponent {
 
   onDateChanged(dates: Date[]) {
     this.fecha = dates;
-    this.getIncidencias(true);
+    this.getGuardias(true);
     console.log(
       'Rango de fechas seleccionado:',
       this.fecha.map((d) => d.toLocaleDateString('en-CA'))
@@ -99,14 +99,15 @@ export class IncidenciasSuperComponent {
   }
 
   clearDate() {
-    this.getIncidencias();
+    this.getGuardias();
     this.fecha = [];
   }
+
   mostrarComentarioCompleto(id: number) {
     if (this.comentariosExpandidos.has(id)) {
-      this.comentariosExpandidos.delete(id); // Si está expandido, lo contrae
+      this.comentariosExpandidos.delete(id);
     } else {
-      this.comentariosExpandidos.add(id); // Si está contraído, lo expande
+      this.comentariosExpandidos.add(id);
     }
   }
 
@@ -115,11 +116,11 @@ export class IncidenciasSuperComponent {
   }
 
   generarPDF() {
-    const filteredRows = this.dt2.filteredValue || this.incidenciasList;
+    const filteredRows = this.dt2.filteredValue || this.guardiasList;
 
     console.log('Resultados filtrados:', filteredRows);
 
-    this.pdfService.generateIncidenciasPDF(filteredRows);
+    this.pdfService.generateGuardiasPDF(filteredRows);
   }
 
   getSeverity(idGrupo: number) {

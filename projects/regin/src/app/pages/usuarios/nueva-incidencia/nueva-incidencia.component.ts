@@ -195,6 +195,7 @@ export class NuevaIncidenciaComponent implements OnInit {
         horaFin: horaFin ? horaFin : this.guardiasForm.value.turno.horaFin,
         comentario: this.guardiasForm.value.comentario,
         usuarioId: this.currentUser.id,
+        grupoId: this.currentUser.grupo.id,
       };
 
       this.guardiaService.createGuardia(guardia).subscribe({

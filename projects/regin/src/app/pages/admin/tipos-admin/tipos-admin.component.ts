@@ -124,6 +124,7 @@ export class TiposAdminComponent implements OnInit {
   editingTipo(tipo: TipoInterface) {
     this.isEditingTipo = true;
     this.oldEditTipo = tipo;
+    this.tipoForm.controls['tipo'].setValue(tipo.nombre);
   }
 
   cancelEditTipo() {
@@ -236,6 +237,7 @@ export class TiposAdminComponent implements OnInit {
   editingSubtipo(subtipo: SubtipoInterface) {
     this.isEditingSubtipo = true;
     this.oldEditSubtipo = subtipo;
+    this.subtipoForm.controls['subtipo'].setValue(subtipo.nombre);
     this.subtipoForm.controls['tipoList'].setValue(subtipo.tipo);
   }
 

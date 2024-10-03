@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GrupoInterface } from '../../../../../shared/interfaces/grupo.interface';
+import {
+  GrupoInterface,
+  GrupoListInterface,
+} from '../../../../../shared/interfaces/grupo.interface';
 import { environment } from '../../../../../shared/environments/environments';
 
 @Injectable({
@@ -12,7 +15,7 @@ export class GrupoService {
 
   constructor(private http: HttpClient) {}
 
-  getGrupoList(): Observable<GrupoInterface[]> {
+  getGrupoList(): Observable<GrupoListInterface[]> {
     return this.http.get<GrupoInterface[]>(`${this.baseUrl}/api/grupos`);
   }
 

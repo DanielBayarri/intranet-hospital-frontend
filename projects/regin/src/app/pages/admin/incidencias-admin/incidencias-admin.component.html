@@ -2,10 +2,18 @@
   <app-breadcrumb />
 
   <h3 class="font-medium text-center">
-    <i class="pi pi-list text-teal-500 ml-4 px-2"></i> Listado de Incidencias
+    <i class="pi pi-file-edit text-teal-500 ml-4 px-2"></i> Listado de
+    Incidencias
   </h3>
 
   <div class="card max-w-7xl mx-auto">
+    <p-button
+      label="Generar PDF"
+      (click)="generarPDF()"
+      icon="pi pi-file-pdf"
+      size="small"
+      styleClass="ml-2"
+    />
     <p-table
       #dt2
       [value]="incidenciasList"
@@ -27,11 +35,11 @@
           <!-- FIltro Calendario -->
           <div class="flex flex-col mb-5">
             <label class="text-sm font-normal my-1 text-[#4a5568] mb-1"
-              >Filtrar por fecha</label
+              >Filtrar por fecha: Inicio - Fin</label
             >
             <app-calendar
-              [(date)]="fecha"
-              (dateChange)="onDateChanged($event)"
+              [(rangeDates)]="fecha"
+              (rangeDatesChange)="onDateChanged($event)"
             />
             <span
               class="mt-2 text-teal-500 cursor-pointer text-xs px-2"
@@ -40,7 +48,6 @@
               Limpiar filtro de fecha
             </span>
           </div>
-
           <!-- FIltro lo demas -->
           <div class="flex flex-col items-end mb-5">
             <label
@@ -93,14 +100,13 @@
       </ng-template>
       <ng-template pTemplate="body" let-incidenciasList>
         <tr>
-          <td>{{ incidenciasList.fecha }}</td>
+          <td>{{ incidenciasList.fecha | date : "dd/MM/yyyy" }}</td>
           <td>{{ incidenciasList.horaInicio }}</td>
           <td>{{ incidenciasList.usuario.nombre }}</td>
           <td>{{ incidenciasList.titulo }}</td>
           @if(incidenciasList.comentario.length >= 30 ){
 
           <td>
-            <!-- Mostrar el comentario dependiendo de si está expandido o no -->
             <ng-container
               *ngIf="
                 isComentarioExpandido(incidenciasList.id);
@@ -116,7 +122,6 @@
                 Ver menos
               </span>
             </ng-container>
-            <!-- Mostrar solo una parte del comentario -->
             <ng-template #comentarioCorto>
               {{ incidenciasList.comentario.slice(0, 30) }}...
               <br />

@@ -1,3 +1,4 @@
+import { GrupoInterface } from './grupo.interface';
 import { UsuarioInterface } from './usuario.interface';
 
 export interface GuardiaLocalizadaInterface {
@@ -7,6 +8,7 @@ export interface GuardiaLocalizadaInterface {
   horaInicio: string;
   horaFin: string;
   usuario: UsuarioInterface;
+  grupo: GrupoInterface;
 }
 
 export interface CrearGuardiaLocalizadaInterface {
@@ -16,4 +18,5 @@ export interface CrearGuardiaLocalizadaInterface {
   horaInicio: string;
   horaFin: string;
   usuarioId: number;
+  grupoId: number;
 }

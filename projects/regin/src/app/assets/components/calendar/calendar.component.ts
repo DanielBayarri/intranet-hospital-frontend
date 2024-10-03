@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { PrimeNGConfig } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { InputOtpModule } from 'primeng/inputotp';
+import { range } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -12,8 +13,10 @@ import { InputOtpModule } from 'primeng/inputotp';
   styles: ``,
 })
 export class CalendarComponent {
-  @Input() date: Date | undefined;
-  @Output() dateChange: EventEmitter<Date> = new EventEmitter<Date>();
+  @Input() rangeDates: Date[] = [];
+  @Output() rangeDatesChange: EventEmitter<Date[]> = new EventEmitter<Date[]>();
+
+  date: Date[] | undefined;
 
   constructor(private primengConfig: PrimeNGConfig) {}
 
@@ -67,9 +70,7 @@ export class CalendarComponent {
       weekHeader: 'Semana',
     });
   }
-
-  onDateSelect(event: any) {
-    this.date = event;
-    this.dateChange.emit(this.date); // Emitir el valor seleccionado al componente padre
+  onDateSelect() {
+    this.rangeDatesChange.emit(this.rangeDates);
   }
 }

@@ -9,8 +9,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class PdfService {
   constructor() {}
 
-  generatePDF(data: any[]) {
-    // Columnas de la tabla
+  generateIncidenciasPDF(data: any[]) {
+    // Columnas
     const columns = [
       'Título',
       'Fecha',
@@ -23,7 +23,6 @@ export class PdfService {
       'Usuario',
     ];
 
-    // Cuerpo de la tabla
     const tableBody = [
       columns.map((col) => ({ text: col, style: 'tableHeader' })),
     ];
@@ -54,7 +53,7 @@ export class PdfService {
       },
     ];
 
-    // Define estilos y genera el documento PDF
+    // estilos  el documento PDF
     const docDefinition: any = {
       content: pdfContent,
       styles: {
@@ -78,7 +77,73 @@ export class PdfService {
       pageMargins: [20, 30, 20, 30],
     };
 
-    // Usa pdfMake para generar el PDF
     pdfMake.createPdf(docDefinition).download('registro_incidencias.pdf');
+  }
+
+  generateGuardiasPDF(data: any[]) {
+    // Columnas
+    const columns = [
+      'Comentario',
+      'Fecha',
+      'Hora Inicio',
+      'Hora Fin',
+      'Usuario',
+      'Grupo',
+    ];
+
+    const tableBody = [
+      columns.map((col) => ({ text: col, style: 'tableHeader' })),
+    ];
+
+    // Agrega los datos
+    data.forEach((row: any) => {
+      tableBody.push([
+        row.comentario,
+        row.fecha,
+        row.horaInicio,
+        row.horaFin,
+        `${row.usuario.nombre} ${row.usuario.apellidos}`,
+        row.grupo.nombre,
+      ]);
+    });
+
+    const pdfContent = [
+      { text: 'Registro de Guardias Localizadas', style: 'header' },
+      {
+        table: {
+          headerRows: 1,
+          widths: columns.map(() => 'auto'),
+          body: tableBody,
+        },
+      },
+    ];
+
+    // Estilos y generar el  PDF
+    const docDefinition: any = {
+      content: pdfContent,
+      styles: {
+        header: {
+          fontSize: 14,
+          bold: true,
+          margin: [0, 0, 0, 10],
+          color: '#0d9488',
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 8,
+          color: 'white',
+          fillColor: '#0d9488',
+        },
+      },
+      defaultStyle: {
+        fontSize: 7,
+      },
+      pageSize: 'A4',
+      pageMargins: [20, 30, 20, 30],
+    };
+
+    pdfMake
+      .createPdf(docDefinition)
+      .download('registro_guardias_localizadas.pdf');
   }
 }

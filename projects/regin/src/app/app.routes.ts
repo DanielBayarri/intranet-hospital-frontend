@@ -8,39 +8,54 @@ import { UsuariosSuperComponent } from './pages/superadmin/usuarios-super/usuari
 import { TiposSuperComponent } from './pages/superadmin/tipos-super/tipos-super.component';
 import { IncidenciasSuperComponent } from './pages/superadmin/incidencias-super/incidencias-super.component';
 import { isAuthenticatedGuard } from '../../../shared/guards/is-authenticated.guard';
+import { ListaGuardiasLocalizadasComponent } from './pages/usuarios/lista-guardias-localizadas/lista-guardias-localizadas.component';
+import { GuardiasAdminComponent } from './pages/admin/guardias-admin/guardias-admin.component';
+import { GuardiasSuperComponent } from './pages/superadmin/guardias-super/guardias-super.component';
 
 export const REGIN_ROUTES: Routes = [
-  { path: '', redirectTo: 'incidencias/nueva', pathMatch: 'full' },
+  { path: '', redirectTo: 'usuario/nueva-incidencia', pathMatch: 'full' },
   {
-    path: 'incidencias/nueva',
-    component: NuevaIncidenciaComponent, // Reemplaza con el componente correspondiente
+    path: 'usuario/nueva-incidencia',
+    component: NuevaIncidenciaComponent,
   },
   {
-    path: 'incidencias/lista',
-    component: ListaIncidenciasComponent, // Reemplaza con el componente correspondiente
+    path: 'usuario/incidencias',
+    component: ListaIncidenciasComponent,
+  },
+  {
+    path: 'usuario/guardias-localizadas',
+    component: ListaGuardiasLocalizadasComponent,
   },
   {
     path: 'administrador/usuarios',
-    component: UsuariosAdminComponent, // Reemplaza con el componente correspondiente
+    component: UsuariosAdminComponent,
   },
   {
     path: 'administrador/tipos-subtipos',
-    component: TiposAdminComponent, // Reemplaza con el componente correspondiente
+    component: TiposAdminComponent,
   },
   {
     path: 'administrador/incidencias',
-    component: IncidenciasAdminComponent, // Reemplaza con el componente correspondiente
+    component: IncidenciasAdminComponent,
+  },
+  {
+    path: 'administrador/guardias-localizadas',
+    component: GuardiasAdminComponent,
   },
   {
     path: 'super/usuarios',
-    component: UsuariosSuperComponent, // Reemplaza con el componente correspondiente
+    component: UsuariosSuperComponent,
   },
   {
     path: 'super/tipos-subtipos',
-    component: TiposSuperComponent, // Reemplaza con el componente correspondiente
+    component: TiposSuperComponent,
   },
   {
     path: 'super/incidencias',
-    component: IncidenciasSuperComponent, // Reemplaza con el componente correspondiente
+    component: IncidenciasSuperComponent,
+  },
+  {
+    path: 'super/guardias-localizadas',
+    component: GuardiasSuperComponent,
   },
 ];

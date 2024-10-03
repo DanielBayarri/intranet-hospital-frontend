@@ -3,14 +3,19 @@ export const itemsNav = [
     title: 'Registro Incidencias',
     links: [
       {
-        href: 'incidencias/nueva',
+        href: 'usuario/nueva-incidencia',
         title: 'Nueva incidencia',
         icon: 'pi-pen-to-square',
       },
       {
-        href: 'incidencias/lista',
+        href: 'usuario/incidencias',
         title: 'Mis incidencias',
         icon: 'pi-list',
+      },
+      {
+        href: 'usuario/guardias-localizadas',
+        title: 'Mis guardias localizadas',
+        icon: 'pi-map-marker',
       },
     ],
   },
@@ -32,6 +37,11 @@ export const itemsNav = [
         title: 'Listado incidencias',
         icon: 'pi-file-edit',
       },
+      {
+        href: 'administrador/guardias-localizadas',
+        title: 'Listado guardias localizadas',
+        icon: 'pi-map-marker',
+      },
     ],
   },
   {
@@ -51,6 +61,11 @@ export const itemsNav = [
         href: 'super/incidencias',
         title: 'Listado incidencias',
         icon: 'pi-file-edit',
+      },
+      {
+        href: 'super/guardias-localizadas',
+        title: 'Listado guardias localizadas',
+        icon: 'pi-map-marker',
       },
     ],
   },
