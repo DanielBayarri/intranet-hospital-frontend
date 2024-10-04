@@ -25,9 +25,6 @@ export class AppComponent {
   //entra cuando cambia alguna señal
   public authStatusChangedEffect = effect(() => {
     switch (this.authService.authStatus()) {
-      case AuthStatus.checking:
-        return;
-
       case AuthStatus.authenticated:
         return;
 

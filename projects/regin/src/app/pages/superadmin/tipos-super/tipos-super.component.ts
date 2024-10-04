@@ -146,6 +146,7 @@ export class TiposSuperComponent {
 
   cancelEditTipo() {
     this.isEditingTipo = false;
+    this.tipoForm.reset();
     this.oldEditTipo = null;
   }
 

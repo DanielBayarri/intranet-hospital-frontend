@@ -27,12 +27,12 @@ export interface UsuariosListInterface {
   incidencias: IncidenciaInterface[];
 }
 
-export interface UsuarioCrearInterface {
+export interface CreateUsuarioInterface {
   nombre: string;
   apellidos: string;
   dni: string;
   email: string;
   roleId: number;
   grupoId: number;
-  servicioIds?: number[];
+  serviciosIds?: number[];
 }
