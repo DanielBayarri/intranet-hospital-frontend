@@ -17,14 +17,14 @@
       [paginator]="true"
       [rows]="5"
       [rowsPerPageOptions]="[5, 10, 20]"
-      [globalFilterFields]="['nombre', 'apellidos']"
+      [globalFilterFields]="['nombre', 'apellidos', 'dni']"
     >
       <ng-template pTemplate="caption">
         <div class="flex flex-col items-end mb-5">
           <label
             for="busqueda"
             class="text-sm font-normal my-1 text-[#4a5568] px-2 mb-1"
-            >Busqueda por nombre o apellidos</label
+            >Busqueda por nombre, apellidos o DNI</label
           >
           <p-iconField iconPosition="right" class="ml-auto">
             <p-inputIcon>

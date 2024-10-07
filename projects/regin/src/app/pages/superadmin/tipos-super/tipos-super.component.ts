@@ -134,6 +134,8 @@ export class TiposSuperComponent {
 
   onGrupoSelectionChange(selectedValue: any): void {
     this.grupoId = selectedValue.value.id;
+    this.isLoading = true;
+    this.subtiposList = [];
     this.initValuesTable();
   }
 

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-sidemenu-link',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './sidemenu-link.component.html',
 })
 export class SidemenuLinkComponent {
@@ -12,4 +13,5 @@ export class SidemenuLinkComponent {
   @Input() icon: string = '';
   @Input() url: string = '';
   @Input() isLink: boolean = false;
+  @Input() loader: boolean = false;
 }

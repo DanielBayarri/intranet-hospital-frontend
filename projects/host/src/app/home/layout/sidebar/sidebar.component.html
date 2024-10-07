@@ -16,6 +16,8 @@
       [name]="'RegIn Registro de Incidencias'"
       [icon]="'file-edit'"
       routerLink="../regin"
+      [loader]="loader"
+      (click)="startLoader()"
     />
     <app-sidemenu-link
       [isLink]="true"
