@@ -6,7 +6,7 @@ import { AuthStatus } from '../../../shared/interfaces/auth/auth-status.enum';
 import { AuthService } from '../../../host/src/app/auth/auth.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-root-regin',
   standalone: true,
   imports: [RouterOutlet, HomeComponent],
   templateUrl: './app.component.html',

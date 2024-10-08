@@ -13,13 +13,14 @@
 <a
   class="flex w-full rounded-lg justify-between items-center py-4 bg-[#eaeced] hover:bg-gray-200 px-5 cursor-pointer"
 >
+  @if (loader) {
+  <app-loader />
+  }@else {
   <div class="flex items-center">
     <i class="pi pi-{{ icon }} mr-3 text-xl"></i>
     <span class="text-sm font-bold">{{ name }}</span>
   </div>
-  @if (loader) {
-  <div class="max-w-10 max-h-10"><app-loader /></div>
-  }@else {
+
   <i class="pi pi-link bg-[#ed8b00] rounded-full p-2 text-white"></i>
   }
 </a>

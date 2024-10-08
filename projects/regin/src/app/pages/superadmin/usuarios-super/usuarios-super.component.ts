@@ -178,6 +178,7 @@ export class UsuariosSuperComponent {
     this.usuarioService.createUsuario(usuario).subscribe({
       next: (response) => {
         this.getUsuarios();
+        this.cancelEditUsuario();
         this.messageService.add({
           severity: 'success',
           summary: 'Usuario',

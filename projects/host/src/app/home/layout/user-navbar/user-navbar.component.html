@@ -1,6 +1,17 @@
-<div class="my-2 flex items-center">
-  <span class="text-[#2cb7ab] size-8 text-sm font-bold flex min-x-">
-    {{ user()?.nombre }} {{ user()?.apellidos }} |
-    <i class="pi pi-sign-out cursor-pointer" (click)="onLogout()"></i>
-  </span>
+<div class="max-w-[90rem] mx-auto">
+  <div class="flex justify-between items-center">
+    <img src="/logo.jpg" alt="Logo" height="70" />
+
+    <div
+      class="flex justify-center items-center gap-4 text-[#2cb7ab] font-bold w-1/3"
+    >
+      <span> {{ user()?.nombre }} {{ user()?.apellidos }} </span>
+      <div>
+        <i
+          class="pi pi-sign-out cursor-pointer font-bold"
+          (click)="onLogout()"
+        ></i>
+      </div>
+    </div>
+  </div>
 </div>

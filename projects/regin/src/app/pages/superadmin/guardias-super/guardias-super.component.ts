@@ -118,9 +118,15 @@ export class GuardiasSuperComponent {
   generarPDF() {
     const filteredRows = this.dt2.filteredValue || this.guardiasList;
 
-    console.log('Resultados filtrados:', filteredRows);
+    let textoFechas = 'Todas las incidencias';
+    if (this.fecha.length === 2) {
+      const [startDate, endDate] = this.fecha;
+      textoFechas = `Incidencias del ${startDate.toLocaleDateString(
+        'es-ES'
+      )} al ${endDate.toLocaleDateString('es-ES')}`;
+    }
 
-    this.pdfService.generateGuardiasPDF(filteredRows);
+    this.pdfService.generateGuardiasPDF(filteredRows, textoFechas);
   }
 
   getSeverity(idGrupo: number) {

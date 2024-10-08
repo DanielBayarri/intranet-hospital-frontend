@@ -126,8 +126,16 @@ export class IncidenciasAdminComponent {
   generarPDF() {
     const filteredRows = this.dt2.filteredValue || this.incidenciasList;
 
+    let textoFechas = 'Todas las incidencias';
+    if (this.fecha.length === 2) {
+      const [startDate, endDate] = this.fecha;
+      textoFechas = `Incidencias del ${startDate.toLocaleDateString(
+        'es-ES'
+      )} al ${endDate.toLocaleDateString('es-ES')}`;
+    }
+
     console.log('Resultados filtrados:', filteredRows);
 
-    this.pdfService.generateIncidenciasPDF(filteredRows);
+    this.pdfService.generateIncidenciasPDF(filteredRows, textoFechas);
   }
 }

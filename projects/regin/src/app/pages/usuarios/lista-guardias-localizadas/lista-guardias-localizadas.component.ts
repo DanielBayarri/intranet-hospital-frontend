@@ -113,19 +113,17 @@ export class ListaGuardiasLocalizadasComponent {
 
   clearDate() {
     this.getGuardias();
-    this.fecha = []; // Limpiamos el rango de fechas
+    this.fecha = [];
   }
 
-  // Este método controla la expansión o contracción del comentario
   mostrarComentarioCompleto(id: number) {
     if (this.comentariosExpandidos.has(id)) {
-      this.comentariosExpandidos.delete(id); // Si está expandido, lo contrae
+      this.comentariosExpandidos.delete(id);
     } else {
-      this.comentariosExpandidos.add(id); // Si está contraído, lo expande
+      this.comentariosExpandidos.add(id);
     }
   }
 
-  // Este método comprueba si el comentario está expandido
   isComentarioExpandido(id: number): boolean {
     return this.comentariosExpandidos.has(id);
   }
@@ -133,8 +131,14 @@ export class ListaGuardiasLocalizadasComponent {
   generarPDF() {
     const filteredRows = this.dt2.filteredValue || this.guardiasList;
 
-    console.log('Resultados filtrados:', filteredRows);
+    let textoFechas = 'Todas las incidencias';
+    if (this.fecha.length === 2) {
+      const [startDate, endDate] = this.fecha;
+      textoFechas = `Incidencias del ${startDate.toLocaleDateString(
+        'es-ES'
+      )} al ${endDate.toLocaleDateString('es-ES')}`;
+    }
 
-    this.pdfService.generateGuardiasPDF(filteredRows);
+    this.pdfService.generateGuardiasPDF(filteredRows, textoFechas);
   }
 }
