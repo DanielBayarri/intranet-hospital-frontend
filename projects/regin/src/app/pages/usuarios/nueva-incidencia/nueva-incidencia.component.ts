@@ -28,8 +28,8 @@ import { IncidenciaService } from '../../../core/services/incidencia.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { GrupoService } from '../../../core/services/grupo.service';
-import { GuardiaLocalizadaInterface } from '../../../../../../shared/interfaces/guardia.interface';
 import { GuardiaLocalizadaService } from '../../../core/services/guardias.service';
+import { UsuarioService } from '../../../core/services/usuario.service';
 
 @Component({
   selector: 'app-nueva-incidencia',
@@ -58,6 +58,7 @@ export class NuevaIncidenciaComponent implements OnInit {
   public turnosList: TurnoInterface[] = [];
   public tiposList: TipoInterface[] = [];
   public subtiposList: SubtipoInterface[] = [];
+  public usuariosList: UsuarioInterface[] = [];
   public currentUser: UsuarioInterface | null = null;
   public fechaHoy: Date = new Date();
 
@@ -70,7 +71,8 @@ export class NuevaIncidenciaComponent implements OnInit {
     private tipoService: TipoService,
     private authService: AuthService,
     private turnoService: TurnoService,
-    private guardiaService: GuardiaLocalizadaService
+    private guardiaService: GuardiaLocalizadaService,
+    private usuarioService: UsuarioService
   ) {
     this.myForm = this.fb.group({
       titulo: ['', [Validators.required]],
@@ -84,6 +86,7 @@ export class NuevaIncidenciaComponent implements OnInit {
       comentario: ['', [Validators.required]],
       horaInicio: ['', [Validators.required]],
       horaFin: ['', [Validators.required]],
+      usuario: ['', [Validators.required]],
     });
     this.currentUser = this.authService.currentUser();
   }
@@ -100,6 +103,11 @@ export class NuevaIncidenciaComponent implements OnInit {
       let grupoId = this.currentUser.grupo.id;
       this.grupoService.getGrupo(grupoId).subscribe((grupo) => {
         this.tiposList = grupo.tipos;
+      });
+      this.usuarioService.getUsuariosList().subscribe((usuario) => {
+        this.usuariosList = usuario.filter(
+          (user) => this.currentUser?.grupo.id === user.grupo.id
+        );
       });
     }
   }
@@ -194,7 +202,7 @@ export class NuevaIncidenciaComponent implements OnInit {
           : this.guardiasForm.value.turno.horaInicio,
         horaFin: horaFin ? horaFin : this.guardiasForm.value.turno.horaFin,
         comentario: this.guardiasForm.value.comentario,
-        usuarioId: this.currentUser.id,
+        usuarioId: this.guardiasForm.value.usuario.id,
         grupoId: this.currentUser.grupo.id,
       };
 

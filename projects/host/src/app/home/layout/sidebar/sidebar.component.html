@@ -26,55 +26,49 @@
       [icon]="'book'"
     />
   </div>
-
   <div class="w-full h-[2px] bg-[#eaeced] my-10"></div>
+
+  <!-- App Navegador -->
 
   <div class="">
     <h3 class="text-lg">Aplicaciones por Navegador</h3>
     <ul
       class="list-disc list-outside text-azul mt-6 text-[0.95rem] no-underline"
     >
+      @for (link of linksApp; track $index){ @if(verAppNavegador){
       <li class="my-1">
-        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
-          >Portal Empleado</a
-        >
+        <app-sidemenu-app [name]="link.nombre" [url]="link.url" />
       </li>
+      } @else { @if($index < 4){
       <li class="my-1">
-        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
-          >Bolsa Hospital</a
-        >
+        <app-sidemenu-app [name]="link.nombre" [url]="link.url" />
       </li>
-      <li class="my-1">
-        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
-          >Otra Web</a
-        >
-      </li>
-      <li class="my-1">
-        <a href="" class="text-textColor hover:text-azul ml-1 no-underline"
-          >Pacs La Plana</a
-        >
-      </li>
+      } } }
     </ul>
-    <div class="w-full text-end cursor-pointer">
-      <span class="text-sm text-azul">Ver todas</span>
+    <div class="w-full text-end cursor-pointer" (click)="onShowApp()">
+      <span class="text-sm text-azul">{{
+        verAppNavegador ? "Ver menos" : "Ver todas"
+      }}</span>
     </div>
   </div>
-
   <div class="w-full h-[2px] bg-[#eaeced] my-10"></div>
+
+  <!-- App Favoritas -->
 
   <div class="">
     <h3 class="text-lg">Aplicaciones Favoritas</h3>
     <div class="grid grid-cols-2 gap-2 my-6">
-      <app-favourite-app [name]="'Gestlab'" />
-      <app-favourite-app [name]="'iGestlab'" />
-      <app-favourite-app [name]="'Orion Clinic'" />
-      <app-favourite-app [name]="'Abucasis'" />
-      <app-favourite-app [name]="'Pacs La plana'" />
-      <app-favourite-app [name]="'Pacs General'" />
+      @for (link of favoritesApps; track $index){ @if(verAppFavoritas){
+      <app-favourite-app [name]="link.nombre" [url]="link.url" />
+      } @else { @if($index < 6){
+      <app-favourite-app [name]="link.nombre" [url]="link.url" />
+      }}}
     </div>
 
-    <div class="w-full text-end cursor-pointer">
-      <span class="text-sm text-azul">Ver todas</span>
+    <div class="w-full text-end cursor-pointer" (click)="onShowFavorites()">
+      <span class="text-sm text-azul">{{
+        verAppFavoritas ? "Ver menos" : "Ver todas"
+      }}</span>
     </div>
   </div>
 </aside>

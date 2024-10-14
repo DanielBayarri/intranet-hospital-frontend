@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-      'fondo': "url('/fondo1.jpg')",
+      'fondo': "url('/fondo1.webp')",
     },
     colors:{
       'textColor': '#616161',

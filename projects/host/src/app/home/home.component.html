@@ -2,16 +2,16 @@
   <app-user-navbar />
   <app-navbar />
   <div class="flex max-w-[90rem] mx-auto px-3">
-    <main class="w-[65rem]">
+    <main class="max-w-[65rem]">
       <app-header />
       <app-menu />
       <router-outlet />
-      <div class="flex gap-5">
+      <div class="flex flex-col lg:flex-row gap-5">
         <app-faq />
         <app-documents />
       </div>
     </main>
-    <app-sidebar class="w-[25rem]" />
+    <app-sidebar class="max-w-[25rem]" />
   </div>
   <app-footer />
 </div>

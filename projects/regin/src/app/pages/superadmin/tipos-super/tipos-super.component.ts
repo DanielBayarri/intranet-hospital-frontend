@@ -103,36 +103,24 @@ export class TiposSuperComponent {
 
   // Inicializar la lista de tipos y subtipos
   initValuesTable() {
-    if (this.currentUser) {
-      this.grupoService.getGrupo(this.grupoId).subscribe((grupo) => {
-        this.tiposList = grupo.tipos;
+    this.tipoService.getTiposList().subscribe((tipos) => {
+      this.tiposList = tipos.filter((tipo) => tipo.grupo.id === this.grupoId);
 
-        // Cargar los subtipos para cada tipo usando forkJoin
-        const subtipoObservables = this.tiposList.map((tipo: TipoInterface) =>
-          this.tipoService.getTipo(tipo.id)
-        );
-        console.log(subtipoObservables);
-        this.subtiposList = [];
-
-        // Esperamos que todos los observables de los tipos se resuelvan
-        forkJoin(subtipoObservables).subscribe((tipoDetailsArray) => {
-          tipoDetailsArray.forEach((tipoDetails, index) => {
-            tipoDetails.subtipos.forEach((subtipo) => {
-              // Añadir los subtipos a la lista con el nombre del tipo al que pertenecen
-              this.subtiposList.push({
-                ...subtipo,
-                tipo: this.tiposList[index].nombre,
-              });
-            });
+      this.tiposList.map((tipo) => {
+        tipo.subtipos.map((subtipo) => {
+          this.subtiposList.push({
+            id: subtipo.id,
+            nombre: subtipo.nombre,
+            tipo: tipo.nombre,
           });
-          // Desactivar el flag del loader una vez que los subtipos estén cargados
-          this.isLoading = false;
         });
       });
-    }
+      this.isLoading = false;
+    });
   }
 
   onGrupoSelectionChange(selectedValue: any): void {
+    console.log(this.subtiposList);
     this.grupoId = selectedValue.value.id;
     this.isLoading = true;
     this.subtiposList = [];
@@ -163,6 +151,8 @@ export class TiposSuperComponent {
           this.isLoading = true;
           this.subtiposList = [];
           this.initValuesTable();
+          this.tipoForm.reset();
+
           this.messageService.add({
             severity: 'success',
             summary: 'Tipo',
@@ -187,6 +177,8 @@ export class TiposSuperComponent {
       };
       this.tipoService.patchTipo(tipo, oldEditTipo.id).subscribe({
         next: (response) => {
+          this.isLoading = true;
+          this.subtiposList = [];
           this.initValuesTable();
           this.cancelEditTipo();
           this.messageService.add({
@@ -221,6 +213,7 @@ export class TiposSuperComponent {
                 next: (response) => {
                   this.isLoading = true;
                   this.subtiposList = [];
+                  this.cancelEditTipo();
                   this.initValuesTable();
                   this.messageService.add({
                     severity: 'success',
@@ -278,6 +271,7 @@ export class TiposSuperComponent {
           this.isLoading = true;
           this.subtiposList = [];
           this.initValuesTable();
+          this.cancelEditSubtipo();
           this.messageService.add({
             severity: 'success',
             summary: 'Subtipo',
@@ -311,15 +305,15 @@ export class TiposSuperComponent {
           this.cancelEditSubtipo();
           this.messageService.add({
             severity: 'success',
-            summary: 'Tipo',
-            detail: 'Tipo editado correctamente',
+            summary: 'Subtipo',
+            detail: 'Subtipo editado correctamente',
           });
         },
         error: (error) => {
           this.messageService.add({
             severity: 'error',
-            summary: 'Tipo',
-            detail: 'Error al crear el tipo',
+            summary: 'Subtipo',
+            detail: 'Error al crear el subtipo',
           });
         },
       });
@@ -339,6 +333,7 @@ export class TiposSuperComponent {
             this.isLoading = true;
             this.subtiposList = [];
             this.initValuesTable();
+            this.cancelEditSubtipo();
             this.messageService.add({
               severity: 'success',
               summary: 'Subtipo',

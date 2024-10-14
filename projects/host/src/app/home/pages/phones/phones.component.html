@@ -1,1 +1,29 @@
-<p>phones works!</p>,
+<p-table
+  [value]="telefonosList.departamentos"
+  [paginator]="true"
+  [rows]="5"
+  [rowsPerPageOptions]="[5, 10, 20]"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nombre del Departamento</th>
+      <th>Nombre</th>
+      <th>Teléfono</th>
+      <th>Servicio</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-departamento>
+    <tr *ngFor="let telefono of departamento.telefonos">
+      <td>
+        <p-tag
+          [value]="departamento.nombre_departamento"
+          [severity]="getSeverity(departamento.nombre_departamento)"
+        ></p-tag>
+      </td>
+
+      <td>{{ telefono.nombre }}</td>
+      <td>{{ telefono.telefono }}</td>
+      <td>{{ telefono.servicio ? telefono.servicio : "" }}</td>
+    </tr>
+  </ng-template>
+</p-table>

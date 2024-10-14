@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { PrimaryBarComponent } from '../../components/primary-bar/primary-bar.component';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [PrimaryBarComponent],
   templateUrl: './user.component.html',
 })
-export class UserComponent { }
+export class UserComponent {
+  private authService = inject(AuthService);
+  public user = computed(() => this.authService.currentUser());
+}

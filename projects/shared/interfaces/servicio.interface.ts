@@ -5,10 +5,15 @@ export interface ServicioInterface {
   id: number;
   nombre: string;
   tipos: TipoInterface[];
-  grupos: GrupoInterface[];
+  grupo: GrupoInterface;
 }
 
 export interface ServicioListInterface {
   id: number;
   nombre: string;
+}
+
+export interface CreateServicioInterface {
+  nombre: string;
+  grupoId: number;
 }

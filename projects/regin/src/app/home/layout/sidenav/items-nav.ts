@@ -58,6 +58,11 @@ export const itemsNav = [
         icon: 'pi-sitemap',
       },
       {
+        href: 'super/grupos-servicios',
+        title: 'Grupos y Servicios',
+        icon: 'pi-objects-column',
+      },
+      {
         href: 'super/incidencias',
         title: 'Listado incidencias',
         icon: 'pi-file-edit',

@@ -11,6 +11,8 @@ import { isAuthenticatedGuard } from '../../../shared/guards/is-authenticated.gu
 import { ListaGuardiasLocalizadasComponent } from './pages/usuarios/lista-guardias-localizadas/lista-guardias-localizadas.component';
 import { GuardiasAdminComponent } from './pages/admin/guardias-admin/guardias-admin.component';
 import { GuardiasSuperComponent } from './pages/superadmin/guardias-super/guardias-super.component';
+import { GruposServiciosSuperComponent } from './pages/superadmin/grupos-servicios-super/grupos-servicios-super.component';
+import { roleGuard } from '../../../shared/guards/role.guard';
 
 export const REGIN_ROUTES: Routes = [
   { path: '', redirectTo: 'usuario/nueva-incidencia', pathMatch: 'full' },
@@ -29,33 +31,55 @@ export const REGIN_ROUTES: Routes = [
   {
     path: 'administrador/usuarios',
     component: UsuariosAdminComponent,
+    canActivate: [roleGuard],
+    data: { roles: [2, 3] },
   },
   {
     path: 'administrador/tipos-subtipos',
     component: TiposAdminComponent,
+    canActivate: [roleGuard],
+    data: { roles: [2, 3] },
   },
   {
     path: 'administrador/incidencias',
     component: IncidenciasAdminComponent,
+    canActivate: [roleGuard],
+    data: { roles: [2, 3] },
   },
   {
     path: 'administrador/guardias-localizadas',
     component: GuardiasAdminComponent,
+    canActivate: [roleGuard],
+    data: { roles: [2, 3] },
   },
   {
     path: 'super/usuarios',
     component: UsuariosSuperComponent,
+    canActivate: [roleGuard],
+    data: { roles: [3] },
   },
   {
     path: 'super/tipos-subtipos',
     component: TiposSuperComponent,
+    canActivate: [roleGuard],
+    data: { roles: [3] },
+  },
+  {
+    path: 'super/grupos-servicios',
+    component: GruposServiciosSuperComponent,
+    canActivate: [roleGuard],
+    data: { roles: [3] },
   },
   {
     path: 'super/incidencias',
     component: IncidenciasSuperComponent,
+    canActivate: [roleGuard],
+    data: { roles: [3] },
   },
   {
     path: 'super/guardias-localizadas',
     component: GuardiasSuperComponent,
+    canActivate: [roleGuard],
+    data: { roles: [3] },
   },
 ];

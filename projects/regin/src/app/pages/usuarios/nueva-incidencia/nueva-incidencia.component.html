@@ -168,6 +168,37 @@
           }
         </div>
 
+        <!-- Usuario -->
+        <div class="col-span-2 flex flex-col justify-center">
+          <label for="usuario" class="block mb-2" style="width: 100px"
+            >Usuario</label
+          >
+          <p-dropdown
+            id="usuario"
+            [options]="usuariosList"
+            formControlName="usuario"
+            optionLabel="nombre"
+            placeholder="Seleccione un usuario"
+            (onChange)="onTipoSelectionChange($event)"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2">
+                <div>{{ guardiasForm.value.usuario.nombre }}</div>
+                <div>{{ guardiasForm.value.usuario.apellidos }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-user pTemplate="item">
+              <div class="flex items-center gap-2">
+                <div>{{ user.nombre }}</div>
+                <div>{{ user.apellidos }}</div>
+              </div>
+            </ng-template></p-dropdown
+          >
+          @if(myForm.get('usuario')?.invalid && myForm.get('usuario')?.touched){
+          <small class="p-error"> El usuario es requerido </small>
+          }
+        </div>
+
         <!-- Comentario -->
         <div class="col-span-4 flex flex-col w-full mx-auto">
           <label for="comentario" class="block mb-2" style="width: 100px"

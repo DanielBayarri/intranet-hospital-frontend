@@ -12,15 +12,15 @@ export class PdfService {
 
   generateIncidenciasPDF(data: any[], textoFechas: string) {
     const columns = [
-      'Título',
       'Fecha',
-      'Comentario',
-      'Grupo',
       'Hora Inicio',
-      'Subtipo',
+      'Título',
+      'Comentario',
       'Tipo',
-      'Turno',
+      'Subtipo',
       'Usuario',
+      'Grupo',
+      'Turno',
     ];
 
     const tableBody = [
@@ -30,15 +30,15 @@ export class PdfService {
     // Agrega los datos a la tabla
     data.forEach((row: any) => {
       tableBody.push([
-        row.titulo,
         row.fecha,
-        row.comentario,
-        row.grupo.nombre,
         row.horaInicio,
-        row.subtipo.nombre,
+        row.titulo,
+        row.comentario,
         row.tipo.nombre,
-        row.turno.nombre,
+        row.subtipo.nombre,
         `${row.usuario.nombre} ${row.usuario.apellidos}`,
+        row.grupo.nombre,
+        row.turno.nombre,
       ]);
     });
 
@@ -117,11 +117,11 @@ export class PdfService {
   generateGuardiasPDF(data: any[], textoFechas: string) {
     // Columnas
     const columns = [
-      'Comentario',
       'Fecha',
       'Hora Inicio',
       'Hora Fin',
       'Usuario',
+      'Comentario',
       'Grupo',
     ];
 
@@ -132,11 +132,11 @@ export class PdfService {
     // Agrega los datos
     data.forEach((row: any) => {
       tableBody.push([
-        row.comentario,
         row.fecha,
         row.horaInicio,
         row.horaFin,
         `${row.usuario.nombre} ${row.usuario.apellidos}`,
+        row.comentario,
         row.grupo.nombre,
       ]);
     });

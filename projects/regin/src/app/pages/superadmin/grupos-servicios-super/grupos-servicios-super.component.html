@@ -3,13 +3,14 @@
   <p-confirmPopup />
   <app-breadcrumb />
   <h3 class="font-medium text-center">
-    <i class="pi pi-sitemap text-teal-500 ml-4 px-2"></i> Tipos y Subtipos
+    <i class="pi pi-objects-column text-teal-500 ml-4 px-2"></i> Grupos y
+    Servicios
   </h3>
 
   <div class="card flex justify-content-center">
-    <form [formGroup]="gruposForm">
+    <form [formGroup]="grupoForm">
       <p-dropdown
-        formControlName="grupos"
+        formControlName="grupo"
         [options]="gruposList"
         optionLabel="nombre"
         placeholder="Selecciona un grupo"
@@ -21,7 +22,7 @@
   <div class="flex gap-10 justify-evenly">
     <!-- Tabla de Tipos -->
     <p-table
-      [value]="tiposList"
+      [value]="gruposList"
       styleClass="w-[500px]"
       [paginator]="true"
       [rows]="5"
@@ -29,35 +30,34 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Tipo</th>
+          <th>Grupo</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-tipo>
+      <ng-template pTemplate="body" let-grupo>
         <tr>
-          <td>{{ tipo.nombre }}</td>
+          <td>{{ grupo.nombre }}</td>
           <td>
             <i
               pTooltip="Editar"
               tooltipPosition="top"
               class="pi pi-pencil text-cyan-600 mx-2 cursor-pointer"
-              (click)="editingTipo(tipo)"
+              (click)="editingGrupo(grupo)"
             ></i>
             <i
               pTooltip="Eliminar"
               tooltipPosition="top"
               class="pi pi-trash text-red-600 mx-2 cursor-pointer"
-              (click)="deleteTipo($event, tipo)"
+              (click)="deleteGrupo($event, grupo)"
             ></i>
           </td>
         </tr>
       </ng-template>
     </p-table>
 
-    <!-- Tabla de Subtipos -->
     @if (!isLoading) {
     <p-table
-      [value]="subtiposList"
+      [value]="serviciosList"
       styleClass="w-[500px]"
       [paginator]="true"
       [rows]="5"
@@ -65,28 +65,28 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Subtipo</th>
-          <th>Tipo al que pertenece</th>
+          <th>Servicio</th>
+          <th>Grupo al que pertenece</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-subtipo>
+      <ng-template pTemplate="body" let-servicio>
         <tr>
-          <td>{{ subtipo.nombre }}</td>
-          <td class="text-sm">{{ subtipo.tipo }}</td>
+          <td>{{ servicio.nombre }}</td>
+          <td class="text-sm">{{ servicio.grupo.nombre }}</td>
           <!-- Mostrar el nombre del tipo al que pertenece -->
           <td>
             <i
               pTooltip="Editar"
               tooltipPosition="left"
               class="pi pi-pencil text-cyan-600 mx-2 cursor-pointer"
-              (click)="editingSubtipo(subtipo)"
+              (click)="editingServicio(servicio)"
             ></i>
             <i
               pTooltip="Eliminar"
               tooltipPosition="left"
               class="pi pi-trash text-red-600 mx-2 cursor-pointer"
-              (click)="deleteSubtipo($event, subtipo)"
+              (click)="deleteServicio($event, servicio)"
             ></i>
           </td>
         </tr>
@@ -96,35 +96,38 @@
     <div class="w-[500px] h-[332px]"></div>
     }
   </div>
+
   <!-- Formularios -->
   <h3 class="font-medium text-center">
-    <i class="pi pi-sitemap text-teal-500 ml-4 px-2"></i> Crear y modificar
+    <i class="pi pi-objects-column text-teal-500 ml-4 px-2"></i> Crear y
+    modificar
   </h3>
   <div class="flex gap-10 justify-center mt-6">
-    <!-- Tipos -->
+    <!-- Grupos -->
     <p-panel styleClass="w-full min-w-[400px]">
       <form
-        [formGroup]="tipoForm"
-        (ngSubmit)="!isEditingTipo ? postTipo() : patchTipo(oldEditTipo)"
+        [formGroup]="grupoForm"
+        (ngSubmit)="!isEditingGrupo ? postGrupo() : patchGrupo(oldEditGrupo)"
       >
         <div class="col-span-4 flex flex-col w-full mx-auto mb-3">
-          <label for="tipo" class="mb-2" style="width: 300px">{{
-            isEditingTipo
-              ? "Editando tipo: " + oldEditTipo?.nombre
-              : "Crear Tipo"
+          <label for="grupo" class="mb-2" style="width: 300px">{{
+            isEditingGrupo
+              ? "Editando grupo: " + oldEditGrupo?.nombre
+              : "Crear Grupo"
           }}</label>
           <input
-            id="tipo"
+            id="grupo"
             type="text"
             pInputText
-            formControlName="tipo"
-            placeholder="Ingrese el tipo"
+            formControlName="grupo"
+            placeholder="Ingrese el grupo"
             class="w-full mx-auto"
-            value="{{ oldEditTipo?.nombre }}"
+            value="{{ oldEditGrupo?.nombre }}"
           />
         </div>
-        @if (tipoForm.get('tipo')?.invalid && tipoForm.get('tipo')?.touched) {
-        <small class="p-error">El nombre del tipo es requerido</small>
+        @if (grupoForm.get('grupo')?.invalid && grupoForm.get('grupo')?.touched)
+        {
+        <small class="p-error">El nombre del grupo es requerido</small>
         }
         <div class="flex gap-2">
           <p-button
@@ -135,60 +138,62 @@
             type="submit"
           />
           <p-button
-            [disabled]="!isEditingTipo"
+            [disabled]="!isEditingGrupo"
             label="Cancelar"
             [outlined]="true"
             severity="danger"
             size="small"
             [icon]="'pi pi-times'"
-            (click)="cancelEditTipo()"
+            (click)="cancelEditGrupo()"
           />
         </div>
       </form>
     </p-panel>
-    <!-- Subtipos -->
+    <!-- Servicios -->
     <p-panel styleClass="w-full min-w-[400px]">
       <form
-        [formGroup]="subtipoForm"
+        [formGroup]="servicioForm"
         (ngSubmit)="
-          !isEditingSubtipo ? postSubipo() : patchSubtipo(oldEditSubtipo)
+          !isEditingServicio ? postServicio() : patchServicio(oldEditServicio)
         "
       >
         <div class="col-span-4 flex flex-col w-full mx-auto mb-3">
-          <label for="subtipo" class="flex mb-2" style="width: 300px">{{
-            isEditingSubtipo
-              ? "Editando subtipo: " + oldEditSubtipo?.nombre
-              : "Crear Subtipo"
+          <label for="servicio" class="flex mb-2" style="width: 300px">{{
+            isEditingServicio
+              ? "Editando servicio: " + oldEditServicio?.nombre
+              : "Crear Servicio"
           }}</label>
           <input
-            id="subtipo"
+            id="servicio"
             type="text"
             pInputText
-            formControlName="subtipo"
-            placeholder="Ingrese el subtipo"
+            formControlName="servicio"
+            placeholder="Ingrese el servicio"
             class="w-full mx-auto"
-            value="{{ oldEditSubtipo?.nombre }}"
+            value="{{ oldEditServicio?.nombre }}"
           />
         </div>
-        @if (subtipoForm.get('subtipo')?.invalid &&
-        subtipoForm.get('subtipo')?.touched) {
-        <small class="p-error">El nombre del subtipo es requerido</small>
+        @if (servicioForm.get('servicio')?.invalid &&
+        servicioForm.get('servicio')?.touched) {
+        <small class="p-error">El nombre del servicio es requerido</small>
         }
 
         <div class="flex flex-col justify-center">
           <label for="tiposub" class="block mb-2" style="width: 300px">{{
-            isEditingSubtipo ? "Tipo anterior: " + oldEditSubtipo?.tipo : "Tipo"
+            isEditingServicio
+              ? "Grupo anterior: " + oldEditServicio?.grupo?.nombre
+              : "Grupo"
           }}</label>
           <p-dropdown
             id="tiposub"
-            [options]="tiposList"
-            formControlName="tiposList"
+            [options]="gruposList"
+            formControlName="gruposList"
             optionLabel="nombre"
             placeholder="Seleccione un tipo"
           ></p-dropdown>
-          @if (subtipoForm.get('tiposList')?.invalid &&
-          subtipoForm.get('tiposList')?.touched) {
-          <small class="p-error">El nombre del tipo es requerido</small>
+          @if (servicioForm.get('gruposList')?.invalid &&
+          servicioForm.get('gruposList')?.touched) {
+          <small class="p-error">El nombre del grupo es requerido</small>
           }
         </div>
         <div class="flex gap-2 mt-3">
@@ -200,13 +205,13 @@
             type="submit"
           />
           <p-button
-            [disabled]="!isEditingSubtipo"
+            [disabled]="!isEditingServicio"
             label="Cancelar"
             [outlined]="true"
             severity="danger"
             size="small"
             [icon]="'pi pi-times'"
-            (click)="cancelEditSubtipo()"
+            (click)="cancelEditServicio()"
           />
         </div>
       </form>

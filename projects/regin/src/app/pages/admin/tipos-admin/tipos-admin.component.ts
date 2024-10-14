@@ -71,8 +71,7 @@ export class TiposAdminComponent implements OnInit {
     private messageService: MessageService,
     private tipoService: TipoService,
     private subtipoService: SubtipoService,
-    private authService: AuthService,
-    private grupoService: GrupoService
+    private authService: AuthService
   ) {
     this.tipoForm = this.fb.group({
       tipo: ['', [Validators.required, Validators.minLength(1)]],
@@ -93,29 +92,19 @@ export class TiposAdminComponent implements OnInit {
   initValuesTable() {
     if (this.currentUser) {
       const grupoId = this.currentUser.grupo.id;
+      this.tipoService.getTiposList().subscribe((tipos) => {
+        this.tiposList = tipos.filter((tipo) => tipo.grupo.id === grupoId);
 
-      this.grupoService.getGrupo(grupoId).subscribe((grupo) => {
-        this.tiposList = grupo.tipos;
-
-        // Cargar los subtipos para cada tipo usando forkJoin
-        const subtipoObservables = this.tiposList.map((tipo: TipoInterface) =>
-          this.tipoService.getTipo(tipo.id)
-        );
-        console.log(subtipoObservables);
-        // Esperamos que todos los observables de los tipos se resuelvan
-        forkJoin(subtipoObservables).subscribe((tipoDetailsArray) => {
-          tipoDetailsArray.forEach((tipoDetails, index) => {
-            tipoDetails.subtipos.forEach((subtipo) => {
-              // Añadir los subtipos a la lista con el nombre del tipo al que pertenecen
-              this.subtiposList.push({
-                ...subtipo,
-                tipoNombre: this.tiposList[index].nombre,
-              });
+        this.tiposList.map((tipo) => {
+          tipo.subtipos.map((subtipo) => {
+            this.subtiposList.push({
+              id: subtipo.id,
+              nombre: subtipo.nombre,
+              tipo: tipo.nombre,
             });
           });
-          // Desactivar el flag del loader una vez que los subtipos estén cargados
-          this.isLoading = false;
         });
+        this.isLoading = false;
       });
     }
   }
@@ -143,6 +132,8 @@ export class TiposAdminComponent implements OnInit {
           this.isLoading = true;
           this.subtiposList = [];
           this.initValuesTable();
+          this.tipoForm.reset();
+
           this.messageService.add({
             severity: 'success',
             summary: 'Tipo',
@@ -167,7 +158,10 @@ export class TiposAdminComponent implements OnInit {
       };
       this.tipoService.patchTipo(tipo, oldEditTipo.id).subscribe({
         next: (response) => {
+          this.isLoading = true;
+          this.subtiposList = [];
           this.initValuesTable();
+
           this.cancelEditTipo();
           this.messageService.add({
             severity: 'success',
@@ -202,6 +196,7 @@ export class TiposAdminComponent implements OnInit {
                   this.isLoading = true;
                   this.subtiposList = [];
                   this.initValuesTable();
+                  this.cancelEditTipo();
                   this.messageService.add({
                     severity: 'success',
                     summary: 'Tipo',
@@ -258,6 +253,7 @@ export class TiposAdminComponent implements OnInit {
           this.isLoading = true;
           this.subtiposList = [];
           this.initValuesTable();
+          this.cancelEditSubtipo();
           this.messageService.add({
             severity: 'success',
             summary: 'Subtipo',
@@ -318,6 +314,7 @@ export class TiposAdminComponent implements OnInit {
           next: (response) => {
             this.isLoading = true;
             this.subtiposList = [];
+            this.cancelEditSubtipo();
             this.initValuesTable();
             this.messageService.add({
               severity: 'success',

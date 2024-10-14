@@ -12,3 +12,8 @@ export interface GrupoListInterface {
   id: number;
   nombre: string;
 }
+
+export interface CreateGrupoInterface {
+  nombre: string;
+  serviciosIds?: number[];
+}

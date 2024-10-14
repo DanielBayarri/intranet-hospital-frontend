@@ -64,3 +64,22 @@
 
 Segun tu rol que te muestre los campos que van cambiando
 filtral calendarios por rangos de fecha
+
+
+
+# 10/10/24
+
+**Host**
+
+- Telefonos
+- Menus navbar
+- Loader RegIn
+
+**Regin**
+
+- Mejorar tipo/subtipos llamadas ✔
+- Guard Paginas por rol
+- guardias usuarios de su grupo ✔
+- Turnos no cuadra con la hora ✔
+- Añadir crud grupos y servicios solo superadmin ✔
+- Usuario añadir explicación de como usar la app 
