@@ -18,6 +18,7 @@ import { linksApps, favoritesApps } from '../../shared/enlaces';
     FavouriteAppComponent,
     LoaderComponent,
     SidemenuAppComponent,
+    LoaderComponent,
   ],
   templateUrl: './sidebar.component.html',
 })
@@ -39,7 +40,6 @@ export class SidebarComponent implements OnInit {
 
   startLoader() {
     this.loader = true;
-    console.log(this.loader);
   }
 
   onShowApp() {

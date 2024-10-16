@@ -3,12 +3,42 @@ import { Component } from '@angular/core';
 import { TelefonosList } from '../../shared/telefonos';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-phones',
   standalone: true,
-  imports: [CommonModule, TableModule, TagModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    TagModule,
+    IconFieldModule,
+    InputIconModule,
+  ],
   templateUrl: './phones.component.html',
+  styles: `
+  .custom-input {
+    height: 2.5rem;
+    width: 18.4rem;
+    border-radius: 0.375rem;
+    border: 1px solid #cbd5e0;
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4a5568;
+    padding-left: 0.75rem;
+  }
+
+  .custom-input:hover {
+    border-color: #a0aec0;
+  }
+
+  .custom-input:focus {
+    border-color: #38b2ac;
+  }
+`,
 })
 export class PhonesComponent {
   public telefonosList = TelefonosList;

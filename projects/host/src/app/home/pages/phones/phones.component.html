@@ -1,29 +1,50 @@
 <p-table
-  [value]="telefonosList.departamentos"
+  #dt2
+  [value]="telefonosList"
   [paginator]="true"
-  [rows]="5"
+  [rows]="10"
   [rowsPerPageOptions]="[5, 10, 20]"
+  [globalFilterFields]="['nombre', 'telefono', 'departamento']"
 >
+  <ng-template pTemplate="caption">
+    <!-- FIltro lo demas -->
+
+    <div class="flex flex-col items-end mb-5">
+      <label class="text-sm font-normal my-1 text-[#4a5568] px-2 mb-1"
+        >Busqueda por nombre, telefono o departamento</label
+      >
+      <p-iconField iconPosition="right" class="ml-auto">
+        <p-inputIcon>
+          <i class="pi pi-search"></i>
+        </p-inputIcon>
+        <input
+          pInputText
+          type="text"
+          (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Buscar..."
+          class="custom-input"
+        />
+      </p-iconField>
+    </div>
+  </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th>Nombre del Departamento</th>
-      <th>Nombre</th>
-      <th>Teléfono</th>
-      <th>Servicio</th>
+      <th style="width: 33%">Nombre del Departamento</th>
+      <th style="width: 33%">Nombre</th>
+      <th style="width: 33%">Teléfono</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-departamento>
-    <tr *ngFor="let telefono of departamento.telefonos">
+  <ng-template pTemplate="body" let-telefono>
+    <tr>
       <td>
         <p-tag
-          [value]="departamento.nombre_departamento"
-          [severity]="getSeverity(departamento.nombre_departamento)"
+          [value]="telefono.departamento | lowercase"
+          [severity]="getSeverity(telefono.departamento)"
         ></p-tag>
       </td>
 
       <td>{{ telefono.nombre }}</td>
       <td>{{ telefono.telefono }}</td>
-      <td>{{ telefono.servicio ? telefono.servicio : "" }}</td>
     </tr>
   </ng-template>
 </p-table>

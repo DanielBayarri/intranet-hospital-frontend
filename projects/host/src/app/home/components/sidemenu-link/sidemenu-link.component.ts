@@ -13,5 +13,4 @@ export class SidemenuLinkComponent {
   @Input() icon: string = '';
   @Input() url: string = '';
   @Input() isLink: boolean = false;
-  @Input() loader: boolean = false;
 }

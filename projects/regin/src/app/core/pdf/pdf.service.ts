@@ -121,8 +121,8 @@ export class PdfService {
       'Hora Inicio',
       'Hora Fin',
       'Usuario',
-      'Comentario',
       'Grupo',
+      'Comentario',
     ];
 
     const tableBody = [
@@ -136,8 +136,8 @@ export class PdfService {
         row.horaInicio,
         row.horaFin,
         `${row.usuario.nombre} ${row.usuario.apellidos}`,
-        row.comentario,
         row.grupo.nombre,
+        row.comentario,
       ]);
     });
 

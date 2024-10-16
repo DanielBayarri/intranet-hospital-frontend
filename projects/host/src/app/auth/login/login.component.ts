@@ -33,7 +33,6 @@ export class LoginComponent {
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
-  private cd = inject(ChangeDetectorRef);
   private router = inject(Router);
 
   public loginError = '';
@@ -43,11 +42,13 @@ export class LoginComponent {
   });
 
   login() {
+    this.loginError = '';
     const { dni, password } = this.myForm.value;
     this.authService.login(dni, password).subscribe({
       next: () => this.router.navigateByUrl('/home'),
       error: (error) => {
         console.log(error);
+        this.loginError = error;
       },
     });
   }

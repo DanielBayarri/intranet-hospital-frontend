@@ -1,3 +1,6 @@
+@if(loader){
+  <app-loader />
+}
 <aside
   class="flex flex-col h-full bg-[#f6f6f6] mt-10 mb-6 mx-3 rounded-xl p-8 text-textColor font-bold"
 >
@@ -16,7 +19,6 @@
       [name]="'RegIn Registro de Incidencias'"
       [icon]="'file-edit'"
       routerLink="../regin"
-      [loader]="loader"
       (click)="startLoader()"
     />
     <app-sidemenu-link
